@@ -25,6 +25,9 @@ export default {
         mediumBlue: "#35354B",
         purpleBlue: "#E6E8F3",
         whitish: "#F7F7F7",
+        selectColor: "#F3F4F6",
+        buttonGrey: "#EBEBEB",
+        placeholderColor: "#6D7280",
       },
       fontFamily: {
         DMSans: ["DM Sans", ...defaultTheme.fontFamily.sans],

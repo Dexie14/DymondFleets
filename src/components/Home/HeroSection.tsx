@@ -1,5 +1,8 @@
-import AppStore from "@/assets/AppStore.png"
-import GooglePlay from "@/assets/GooglePlay.png"
+import AppStore from "@/assets/AppStore.png";
+import GooglePlay from "@/assets/GooglePlay.png";
+
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import ScanDialog from "./ScanDialog";
 
 const HeroSection = () => {
   return (
@@ -13,10 +16,17 @@ const HeroSection = () => {
         brings you quality and savings—so you can explore more without the extra
         cost
       </p>
-      <section className="sm:flex gap-6 space-y-2 sm:space-y-0 items-center mb-32">
-        <img src={AppStore} alt="appstore"/>
-        <img src={GooglePlay} alt="GooglePlay"/>
-      </section>
+      <Dialog>
+        <section className="sm:flex gap-6 space-y-2 sm:space-y-0 items-center mb-32">
+          <DialogTrigger>
+            <img src={AppStore} alt="appstore" />
+          </DialogTrigger>
+          <DialogContent className="!rounded-[20px]">
+            <ScanDialog />
+          </DialogContent>
+          <img src={GooglePlay} alt="GooglePlay" />
+        </section>
+      </Dialog>
     </div>
   );
 };

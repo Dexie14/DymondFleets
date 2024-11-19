@@ -1,4 +1,3 @@
-
 import { SVGProps } from "react";
 
 export const OptionIcon = () => {
@@ -84,7 +83,7 @@ export const BackIcon = (props: SVGProps<SVGSVGElement>) => {
       <path
         d="M29 21.5H13.4434M18 26.5L13 21.5L18 16.5"
         stroke="black"
-        stroke-width="1.5"
+        strokeWidth="1.5"
       />
     </svg>
   );
@@ -103,7 +102,7 @@ export const ForwardIcon = (props: SVGProps<SVGSVGElement>) => {
       <path
         d="M13 21.5H28.5715M24.0001 26.5L29 21.5L24 16.5"
         stroke="black"
-        stroke-width="1.5"
+        strokeWidth="1.5"
       />
     </svg>
   );
@@ -193,20 +192,55 @@ export const Twitter = (props: SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
-// export const Dropdown = (props: SVGProps<SVGSVGElement>) => {
-//   return (
-//     <svg
-//       width="14"
-//       {...props}
-//       height="9"
-//       viewBox="0 0 14 9"
-//       fill="none"
-//       xmlns="http://www.w3.org/2000/svg"
-//     >
-//       <path
-//         d="M7.0007 5.43611L2.05093 0.486328L0.636719 1.90055L7.0007 8.26451L13.3646 1.90055L11.9504 0.486328L7.0007 5.43611Z"
-//         fill="black"
-//       />
-//     </svg>
-//   );
-// };
+export const GoBack = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="16"
+      height="17"
+      viewBox="0 0 16 17"
+      {...props}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3.82843 7.55556H16V9.55556H3.82843L9.1924 14.9195L7.7782 16.3337L0 8.55556L7.7782 0.777344L9.1924 2.19155L3.82843 7.55556Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const Asterisk = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="11"
+      height="11"
+      viewBox="0 0 11 11"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M4.23346 10.5198L4.6773 6.78632L1.70097 9.05772L0.5 6.96907L3.94627 5.55924L0.526108 4.22772L1.64876 2.19129L4.70341 4.46269L4.20735 0.703125H6.53097L6.00881 4.46269L9.06346 2.19129L10.16 4.20161L6.71373 5.61145L10.16 6.99518L9.01124 9.03161L6.00881 6.78632L6.50487 10.5198H4.23346Z"
+        fill="#F54748"
+      />
+    </svg>
+  );
+};
+export const PlusIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="20"
+      height="21"
+      viewBox="0 0 20 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M9 9.11191V0.112315L11 0.112305V9.11191L20.0001 9.11171L20.0002 11.1117L11 11.1119L11.0001 20.1118H9.0001V11.1119L4.00543e-05 11.1121L0 9.11211L9 9.11191Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};

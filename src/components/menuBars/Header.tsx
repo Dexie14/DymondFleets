@@ -5,7 +5,7 @@ import {
 } from "@/assets/svgComp/General";
 import { Button } from "../ui/button";
 import dymond from "/dymond.svg";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoColored from "@/assets/logoColored.png";
 
 import { motion } from "framer-motion";
@@ -28,6 +28,7 @@ import GooglePlay from "@/assets/GooglePlay.png";
 const Header = () => {
   const location = useLocation();
 
+  const navigate = useNavigate();
   const getLinkClass = (path: string) => {
     const isActive = location.pathname === path;
     return `
@@ -47,7 +48,7 @@ const Header = () => {
             EN <DropdownIcon />
           </h4>
           <Link
-            to="/"
+            to="/about"
             className={`${getLinkClass(
               "#about"
             )} font-semibold hidden sm:block`}
@@ -65,7 +66,10 @@ const Header = () => {
               align="end"
               className="py-8 px-8 rounded-[12px] w-[308px] space-y-8"
             >
-              <section className="flex items-center justify-between cursor-pointer">
+              <Link
+                to="/register"
+                className="flex items-center justify-between cursor-pointer"
+              >
                 <div className="w-[90%]">
                   <h4 className="font-semibold text-deepBlue">
                     Become a driver
@@ -75,7 +79,7 @@ const Header = () => {
                   </p>
                 </div>
                 <RightArrowIcon />
-              </section>
+              </Link>
               <section className="flex items-center justify-between cursor-pointer">
                 <div className="w-[90%]">
                   <h4 className="font-semibold text-deepBlue">
@@ -107,74 +111,85 @@ const Header = () => {
                 <OptionIcon />
               </div>
             </SheetTrigger>
-            <SheetContent className="h-[70vh] mt-10 sm:mr-10  rounded-[12px] overflow-y-scroll scrollbar-hidden">
+            <SheetContent
+              style={{ pointerEvents: "all" }}
+              className="h-[70vh] mt-10 sm:mr-10  rounded-[12px] overflow-y-scroll scrollbar-hidden "
+            >
               <SheetHeader>
                 <SheetTitle>
                   <div className="w-16 h-16">
                     <img src={logoColored} alt="logoColored" />
                   </div>
                 </SheetTitle>
-                <div className="space-y-7">
-                  <div className="">
-                    <div
-                      className="flex items-center justify-between cursor-pointer "
-                      onClick={() => setOpenDropdown(!openDropdown)}
+              </SheetHeader>
+              <div className="space-y-7">
+                <div className="">
+                  <div
+                    className="flex items-center justify-between cursor-pointer "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOpenDropdown(!openDropdown);
+                    }}
+                  >
+                    <span className="font-semibold sm:text-lg text-sm">
+                      Products
+                    </span>
+                    <motion.div
+                      initial={{ rotate: 0 }}
+                      animate={{ rotate: openDropdown ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
                     >
-                      <span className="font-semibold sm:text-lg text-sm">
-                        Products
-                      </span>
-                      <motion.div
-                        initial={{ rotate: 0 }}
-                        animate={{ rotate: openDropdown ? 180 : 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div>
-                          <DropdownIcon className="text-black" />
-                        </div>
-                      </motion.div>
-                    </div>
-
-                    {openDropdown && (
-                      <motion.ul
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{
-                          height: openDropdown ? "auto" : 0,
-                          opacity: openDropdown ? 1 : 0,
-                        }}
-                        transition={{ duration: 0.3 }}
-                        className=" mt-2 text-textShade  text-left"
-                      >
-                        <li className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs  cursor-pointer">
-                          Rides
-                        </li>
-                        <li className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs cursor-pointer">
-                          Share Rides
-                        </li>
-                        <li className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs  cursor-pointer">
-                          Courier
-                        </li>
-                      </motion.ul>
-                    )}
+                      <div>
+                        <DropdownIcon className="text-black" />
+                      </div>
+                    </motion.div>
                   </div>
-                  <div className="">
-                    <div
-                      className="flex items-center justify-between cursor-pointer "
-                      onClick={() => setOpenCompany(!openCompany)}
-                    >
-                      <span className="font-semibold sm:text-lg text-sm">
-                        Earn with Dymond Fleets
-                      </span>
-                      <motion.div
-                        initial={{ rotate: 0 }}
-                        animate={{ rotate: openCompany ? 180 : 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div>
-                          <DropdownIcon className="text-black" />
-                        </div>
-                      </motion.div>
-                    </div>
 
+                  {openDropdown && (
+                    <motion.ul
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{
+                        height: openDropdown ? "auto" : 0,
+                        opacity: openDropdown ? 1 : 0,
+                      }}
+                      transition={{ duration: 0.3 }}
+                      className=" mt-2 text-textShade  text-left"
+                    >
+                      <li className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs  cursor-pointer">
+                        Rides
+                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs cursor-pointer">
+                        Share Rides
+                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs  cursor-pointer">
+                        Courier
+                      </li>
+                    </motion.ul>
+                  )}
+                </div>
+                <div className="">
+                  <div
+                    className="flex items-center justify-between cursor-pointer "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOpenCompany(!openCompany);
+                    }}
+                  >
+                    <span className="font-semibold sm:text-lg text-sm">
+                      Earn with Dymond Fleets
+                    </span>
+                    <motion.div
+                      initial={{ rotate: 0 }}
+                      animate={{ rotate: openCompany ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div>
+                        <DropdownIcon className="text-black" />
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {openCompany && (
                     <motion.ul
                       initial={{ height: 0, opacity: 0 }}
                       animate={{
@@ -194,18 +209,25 @@ const Header = () => {
                         Courier
                       </li>
                     </motion.ul>
-                  </div>
-                  <div>
-                    <p className="font-semibold sm:text-lg text-sm text-left">
-                      About Us
-                    </p>
-                  </div>
-                  <section className="sm:flex gap-2 space-y-2 sm:space-y-0 items-center ">
-                    <img src={AppStore} alt="appstore" />
-                    <img src={GooglePlay} alt="GooglePlay" />
-                  </section>
+                  )}
                 </div>
-              </SheetHeader>
+                <div>
+                  <p
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log("clicked");
+                      navigate("/about");
+                    }}
+                    className="font-semibold sm:text-lg text-sm text-left cursor-pointer "
+                  >
+                    About
+                  </p>
+                </div>
+                <section className="sm:flex gap-2 space-y-2 sm:space-y-0 items-center ">
+                  <img src={AppStore} alt="appstore" />
+                  <img src={GooglePlay} alt="GooglePlay" />
+                </section>
+              </div>
             </SheetContent>
           </Sheet>
         </aside>
