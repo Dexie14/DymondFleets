@@ -9,15 +9,15 @@ interface HeroProps {
 const HeroLayout = ({ children }: HeroProps) => {
   const location = useLocation();
 
-  const shop = location.pathname === "/shop";
+  const about = location.pathname === "/about";
   const home = location.pathname === "/";
   return (
     <div
       className={`${
         home
           ? `sm:bg-[url('/Herobackground.png')] bg-[url('/HerobackgroundMobile.png')]`
-          : shop
-          ? `bg-[url('/AboutImage.png')]`
+          : about
+          ? `bg-[url('/AboutBackground.png')]`
           : "bg-fadedBackground"
       } bg-cover bg-no-repeat sm:bg-center `}
     >

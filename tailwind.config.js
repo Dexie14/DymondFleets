@@ -15,6 +15,7 @@ export default {
       colors: {
         foundationWhite: "#FDFDFD",
         foundationBlue: "#040C48",
+        foundationRed: "#F54748",
         deepBlue: "#02021E",
         textShade: "#616161",
         blueShade: "#071582",
@@ -28,6 +29,11 @@ export default {
         selectColor: "#F3F4F6",
         buttonGrey: "#EBEBEB",
         placeholderColor: "#6D7280",
+        subtle: "#EEEEEE",
+      },
+      boxShadow: {
+        custom: "0px 4px 5.8px 0px #00000026"
+        ,
       },
       fontFamily: {
         DMSans: ["DM Sans", ...defaultTheme.fontFamily.sans],

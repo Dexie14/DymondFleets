@@ -21,7 +21,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppStore from "@/assets/AppStore.png";
 import GooglePlay from "@/assets/GooglePlay.png";
 
@@ -36,13 +36,39 @@ const Header = () => {
       `;
   };
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 500) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [openCompany, setOpenCompany] = useState<boolean>(false);
 
   return (
     <section>
-      <div className="flex items-center justify-between w-[80%] mx-auto py-10 ">
-        <img src={dymond} alt="dymond" />
+      <div
+        className={`${
+          isScrolled
+            ? "bg-deepBlue w-full sm:px-32 px-8 py-4 fixed top-0 left-0 right-0 shadow-md z-50"
+            : ""
+        } flex items-center justify-between w-[80%] mx-auto py-10`}
+      >
+        <Link to={"/"}>
+          <img src={dymond} alt="dymond" />
+        </Link>
         <aside className="text-lg items-center sm:gap-x-16 gap-x-4 flex  text-foundationWhite">
           <h4 className="flex gap-2 items-center font-semibold cursor-pointer text-foundationWhite">
             EN <DropdownIcon />

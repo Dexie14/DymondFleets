@@ -96,7 +96,7 @@ const Testimonial = () => {
           <div className="prev-button cursor-pointer absolute bottom-[0%] lg:left-[40%] left-[20%] z-[1000]">
             <BackIcon />
           </div>
-          <div className="next-button cursor-pointer absolute bottom-[0%] lg:right-[40%] right-[0%] z-[1000]">
+          <div className="next-button cursor-pointer absolute bottom-[0%] lg:right-[40%] right-[20%] z-[1000]">
             <ForwardIcon />
           </div>
         </Swiper>
