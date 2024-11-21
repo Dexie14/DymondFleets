@@ -7,6 +7,7 @@ import {
 } from "@/assets/svgComp/General";
 import Container from "../ui/Container";
 import logoColored from "@/assets/logoColored.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const fullYear = new Date().getFullYear();
@@ -46,7 +47,16 @@ const Footer = () => {
             <p>©{fullYear} seafarers. All rights reserved</p>
           </div>
           <div>
-            <p>Privacy Policy | Terms & Conditions | Cookies Policy | Map</p>
+            <p>
+              <span>
+                <Link to="/policy">Privacy Policy </Link>
+              </span>{" "}
+              |{" "}
+              <span>
+                <Link to="/terms">Terms & Conditions </Link>
+              </span>{" "}
+              | Cookies Policy | Map
+            </p>
           </div>
           <div className="flex items-center gap-6">
             <Insta />

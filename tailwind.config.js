@@ -17,6 +17,7 @@ export default {
         foundationBlue: "#040C48",
         foundationRed: "#F54748",
         deepBlue: "#02021E",
+        textBlue: "#030937",
         textShade: "#616161",
         blueShade: "#071582",
         borderColor: "#A3A3A3",

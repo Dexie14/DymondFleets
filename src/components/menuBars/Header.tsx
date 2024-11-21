@@ -40,7 +40,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 500) {
+      if (window.scrollY > 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -57,20 +57,29 @@ const Header = () => {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [openCompany, setOpenCompany] = useState<boolean>(false);
 
+  const TermsandPolicy =
+    location.pathname === "/terms" || location.pathname === "/policy";
+
   return (
     <section>
       <div
         className={`${
           isScrolled
-            ? "bg-deepBlue w-full sm:px-32 px-8 py-4 fixed top-0 left-0 right-0 shadow-md z-50"
+            ? "bg-blueShade  w-full !text-foundationWhite sm:px-32 px-8 py-4 fixed top-0 left-0 right-0 shadow-md z-50"
             : ""
-        } flex items-center justify-between w-[80%] mx-auto py-10`}
+        } flex  ${
+          TermsandPolicy ? "text-textBlue" : "text-foundationWhite"
+        } items-center justify-between w-[80%] mx-auto py-10`}
       >
         <Link to={"/"}>
-          <img src={dymond} alt="dymond" />
+          <img
+            src={TermsandPolicy ? (isScrolled ? dymond : logoColored) : dymond}
+            alt="dymond"
+            className="w-[90px]"
+          />
         </Link>
-        <aside className="text-lg items-center sm:gap-x-16 gap-x-4 flex  text-foundationWhite">
-          <h4 className="flex gap-2 items-center font-semibold cursor-pointer text-foundationWhite">
+        <aside className={`text-lg items-center sm:gap-x-16 gap-x-4 flex `}>
+          <h4 className="flex gap-2 items-center font-semibold cursor-pointer">
             EN <DropdownIcon />
           </h4>
           <Link
@@ -79,12 +88,20 @@ const Header = () => {
               "#about"
             )} font-semibold hidden sm:block`}
           >
-            Contact us
+            About us
           </Link>
 
           <Popover>
             <PopoverTrigger>
-              <Button className="bg-foundationWhite hidden sm:block text-sm h-[40px] text-foundationBlue w-[87px] rounded-[20px] hover:text-white">
+              <Button
+                className={`${
+                  TermsandPolicy
+                    ? isScrolled
+                      ? "bg-foundationWhite text-foundationBlue  hover:text-white"
+                      : "bg-blueShade text-white"
+                    : "bg-foundationWhite text-foundationBlue  hover:text-white"
+                }  hidden sm:block text-sm h-[40px]  w-[87px] rounded-[20px]`}
+              >
                 Register
               </Button>
             </PopoverTrigger>
@@ -133,7 +150,15 @@ const Header = () => {
 
           <Sheet>
             <SheetTrigger>
-              <div className="cursor-pointer">
+              <div
+                className={`cursor-pointer ${
+                  TermsandPolicy
+                    ? isScrolled
+                      ? "text-foundationWhite"
+                      : "text-textBlue"
+                    : "text-foundationWhite"
+                }`}
+              >
                 <OptionIcon />
               </div>
             </SheetTrigger>

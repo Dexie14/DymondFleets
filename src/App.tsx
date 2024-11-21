@@ -6,6 +6,8 @@ import Register from "./pages/authentication/Register";
 import DriverInfo from "./pages/authentication/DriverInfo";
 import ScrollToTop from "./components/ScrollToTop";
 import AboutUs from "./pages/AboutUs";
+import Terms from "./pages/Terms";
+import Policy from "./pages/Policy";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/about" element={<AboutUs />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/driver-information" element={<DriverInfo />}></Route>
+        <Route path="/terms" element={<Terms />}></Route>
+        <Route path="/policy" element={<Policy />}></Route>
       </Routes>
     </div>
   );
