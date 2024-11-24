@@ -8,6 +8,7 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   className?: string;
+  inputClassname?: string;
   error?: string;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   ref?: React.Ref<HTMLInputElement>;
@@ -21,6 +22,7 @@ const InputField = forwardRef<HTMLInputElement, InputProps>(
       type = "text",
       placeholder,
       className,
+      inputClassname,
       error,
       onBlur,
       value,
@@ -46,7 +48,7 @@ const InputField = forwardRef<HTMLInputElement, InputProps>(
           placeholder={placeholder}
           ref={ref}
           {...rest}
-          className={`mt-1 w-full h-[50px] bg-selectColor placeholder:text-placeholderColor  p-4 rounded-[8px] shadow-sm focus:outline-none focus:border-black text-sm ${
+          className={`mt-1 w-full h-[50px] ${inputClassname} bg-selectColor placeholder:text-placeholderColor  p-4 rounded-[8px] shadow-sm focus:outline-none focus:border-black text-sm ${
             error ? "border-red-500" : ""
           }`}
         />

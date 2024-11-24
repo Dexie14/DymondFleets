@@ -31,10 +31,12 @@ export default {
         buttonGrey: "#EBEBEB",
         placeholderColor: "#6D7280",
         subtle: "#EEEEEE",
+        adminbg: "#F4F5F9",
+        adminBlue: "#39449B",
       },
       boxShadow: {
-        custom: "0px 4px 5.8px 0px #00000026"
-        ,
+        custom: "0px 4px 5.8px 0px #00000026",
+        authshadow: "0px 5.8px 5.8px 5px #0000001A",
       },
       fontFamily: {
         DMSans: ["DM Sans", ...defaultTheme.fontFamily.sans],
