@@ -40,12 +40,12 @@ const InfoCard = ({ infoData }: props) => {
   };
 
   return (
-    <div className="grid lg:grid-cols-4 items-center gap-2 ">
+    <div className="grid lg:grid-cols-4 w-full items-center gap-x-4 ">
       {infoData?.map((item) => {
         return (
           <main
             key={v4()}
-            className="flex gap-2 mt-4 flex-col bg-white py-6 px-8 rounded-[12px] shadow-adminshadow w-[260px]"
+            className="flex gap-2 mt-4 flex-col bg-white py-6 px-8 rounded-[12px] shadow-adminshadow w-[230px]"
           >
             <div className="flex items-center gap-4">
               <div className="text-blueGray">
