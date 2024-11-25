@@ -11,6 +11,10 @@ import Policy from "./pages/Policy";
 import Login from "./pages/authentication/Login";
 import AdminLayout from "./components/layout/AdminLayout";
 import Dashboard from "./pages/dashboard";
+import Rides from "./pages/rides";
+import Transaction from "./pages/transaction";
+import Customer from "./pages/customer";
+import Driver from "./pages/drivers/Driver";
 
 function App() {
   return (
@@ -27,6 +31,10 @@ function App() {
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="/admin" element={<Dashboard />} />
+          <Route path="/admin/rides" element={<Rides />} />
+          <Route path="/admin/transaction" element={<Transaction />} />
+          <Route path="/admin/customers" element={<Customer />} />
+          <Route path="/admin/driver" element={<Driver />} />
         </Route>
       </Routes>
     </div>

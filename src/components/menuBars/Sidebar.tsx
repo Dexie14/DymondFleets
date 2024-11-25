@@ -25,22 +25,22 @@ const sidebarItems: SidebarItem[] = [
   },
   {
     name: "Rides",
-    link: "/rides",
+    link: "/admin/rides",
     icon: <RideIcon />,
   },
   {
     name: "Transaction",
-    link: "/transaction",
+    link: "/admin/transaction",
     icon: <TransactionIcon />,
   },
   {
     name: "Customers",
-    link: "/customers",
+    link: "/admin/customers",
     icon: <CustomerIcon />,
   },
   {
     name: "Drivers",
-    link: "/driver",
+    link: "/admin/driver",
     icon: <DriverIcon />,
   },
 ];
