@@ -23,7 +23,11 @@ const Footer = () => {
             <div className="space-y-5 text-xs">
               <p>Home</p>
               <p>Project</p>
-              <p>About Us</p>
+              <div>
+                <Link to="/about" className="cursor-pointer">
+                  About Us
+                </Link>
+              </div>
               <p>Agents</p>
             </div>
           </div>
@@ -38,7 +42,9 @@ const Footer = () => {
           <div className="text-textShade">
             <h6 className="font-bold mb-8 ">Company</h6>
             <div className="space-y-5 text-xs">
-              <p>About Us</p>
+              <Link to="/about" className="cursor-pointer">
+                About Us
+              </Link>
             </div>
           </div>
         </section>
