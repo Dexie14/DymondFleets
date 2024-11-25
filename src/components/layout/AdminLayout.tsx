@@ -11,7 +11,7 @@ const AdminLayout = () => {
       </div>
       <div className="w-[82%]">
         <AdminHeader />
-        <div className="h-[calc(100vh-104px)] bg-adminbg overflow-y-auto scrollbar-hidden  pr-6">
+        <div className="h-[calc(100vh-104px)] bg-adminbg overflow-y-auto scrollbar-hidden p-6">
           <Outlet />
         </div>
       </div>
