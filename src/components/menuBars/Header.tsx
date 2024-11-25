@@ -169,7 +169,9 @@ const Header = () => {
               <SheetHeader>
                 <SheetTitle>
                   <div className="w-16 h-16">
-                    <img src={logoColored} alt="logoColored" />
+                    <Link to={"/"}>
+                      <img src={logoColored} alt="logoColored" />
+                    </Link>
                   </div>
                 </SheetTitle>
               </SheetHeader>
@@ -272,6 +274,17 @@ const Header = () => {
                     className="font-semibold sm:text-lg text-sm text-left cursor-pointer "
                   >
                     About
+                  </p>
+                </div>
+                <div>
+                  <p
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate("/register");
+                    }}
+                    className="font-semibold sm:text-lg text-sm text-left cursor-pointer "
+                  >
+                    Register
                   </p>
                 </div>
                 <section className="sm:flex gap-2 space-y-2 sm:space-y-0 items-center ">

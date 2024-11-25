@@ -15,9 +15,9 @@ const Footer = () => {
     <div className="bg-whitish mt-14">
       <Container className="py-20">
         <section className="grid lg:grid-cols-4 sm:grid-cols-2  gap-9 border-b border-[#D1D1D1] pb-20">
-          <div>
+          <Link to={"/"}>
             <img src={logoColored} alt="logoColored" />
-          </div>
+          </Link>
           <div className="text-textShade">
             <h6 className="font-bold mb-8 ">Dymond Fleets</h6>
             <div className="space-y-5 text-xs">
