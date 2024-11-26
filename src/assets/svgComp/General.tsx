@@ -295,3 +295,125 @@ export const TogglePassword = (props: SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
+export const ExportIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M13 13V18.585L14.8284 16.7574L16.2426 18.1716L12 22.4142L7.75736 18.1716L9.17157 16.7574L11 18.585V13H13ZM12 2C15.5934 2 18.5544 4.70761 18.9541 8.19395C21.2858 8.83154 23 10.9656 23 13.5C23 16.3688 20.8036 18.7246 18.0006 18.9776L18.0009 16.9644C19.6966 16.7214 21 15.2629 21 13.5C21 11.567 19.433 10 17.5 10C17.2912 10 17.0867 10.0183 16.8887 10.054C16.9616 9.7142 17 9.36158 17 9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9C7 9.36158 7.03838 9.7142 7.11205 10.0533C6.91331 10.0183 6.70879 10 6.5 10C4.567 10 3 11.567 3 13.5C3 15.2003 4.21241 16.6174 5.81986 16.934L6.00005 16.9646L6.00039 18.9776C3.19696 18.7252 1 16.3692 1 13.5C1 10.9656 2.71424 8.83154 5.04648 8.19411C5.44561 4.70761 8.40661 2 12 2Z"
+        fill="#FDFDFD"
+      />
+    </svg>
+  );
+};
+
+export const ResetIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M12 4C14.7486 4 17.1749 5.38626 18.6156 7.5H16V9.5H22V3.5H20V5.99936C18.1762 3.57166 15.2724 2 12 2C6.47715 2 2 6.47715 2 12H4C4 7.58172 7.58172 4 12 4ZM20 12C20 16.4183 16.4183 20 12 20C9.25144 20 6.82508 18.6137 5.38443 16.5H8V14.5H2V20.5H4V18.0006C5.82381 20.4283 8.72764 22 12 22C17.5228 22 22 17.5228 22 12H20Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const SearchIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="17"
+      height="17"
+      viewBox="0 0 17 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g opacity="0.5">
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M9.69355 12.535C12.4234 11.3748 13.6959 8.22136 12.5357 5.49152C11.3756 2.76168 8.2221 1.4892 5.49226 2.64936C2.76242 3.80951 1.48994 6.96297 2.6501 9.69281C3.81025 12.4226 6.96371 13.6951 9.69355 12.535Z"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M11.3902 11.3896L15.5555 15.5556"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const ArrowLeft = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="8"
+      height="12"
+      viewBox="0 0 8 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M7.41 10.4066L2.83 6.00023L7.41 1.59383L6 0.240234L0 6.00023L6 11.7602L7.41 10.4066Z"
+        fill="#202224"
+      />
+    </svg>
+  );
+};
+
+export const ArrowRight = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="8"
+      height="12"
+      viewBox="0 0 8 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M0.59 10.4066L5.17 6.00023L0.59 1.59383L2 0.240234L8 6.00023L2 11.7602L0.59 10.4066Z"
+        fill="#202224"
+      />
+    </svg>
+  );
+};
+
+export const CloseIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M8.00004 6.23242L14.1875 0.0449219L15.955 1.81242L9.76754 7.99992L15.955 14.1874L14.1875 15.9549L8.00004 9.76742L1.81254 15.9549L0.0450439 14.1874L6.23254 7.99992L0.0450439 1.81242L1.81254 0.0449219L8.00004 6.23242Z"
+        fill="black"
+      />
+    </svg>
+  );
+};
