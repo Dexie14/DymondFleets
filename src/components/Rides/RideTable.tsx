@@ -1,4 +1,4 @@
-import { useSelectStore } from "@/store/SelectStore";
+import { useSelectStore } from "@/store/selectStore";
 import TableComponent from "../General/TableComp";
 
 // Sample data type
