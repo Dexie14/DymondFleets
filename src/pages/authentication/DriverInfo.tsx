@@ -121,7 +121,7 @@ const DriverInfo = () => {
               </Button>
             </DialogTrigger>
             <DialogContent className="!rounded-[16px] w-[372px]">
-              <SuccessModal />
+              <SuccessModal message="Registration successfully" />
             </DialogContent>
           </Dialog>
         </section>

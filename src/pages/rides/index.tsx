@@ -6,18 +6,26 @@ import InputFilter from "@/components/General/InputFilter";
 import Pagination from "@/components/General/Pagination";
 import ResetFilter from "@/components/General/ResetFilter";
 import SearchInputComp from "@/components/input/SearchInputComp";
+import AssignTable from "@/components/Rides/AssignTable";
 import RideTable from "@/components/Rides/RideTable";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useSelectStore } from "@/store/selectStore";
 import { useState } from "react";
 
 const Rides = () => {
   const [openRide, setOpenRide] = useState<boolean>(false);
   const [openType, setOpenType] = useState<boolean>(false);
   const [openPay, setOpenPay] = useState<boolean>(false);
+  const [openAssign, setOpenAssign] = useState<boolean>(false);
+
+  const { selectedItems } = useSelectStore();
+
+  const selectedState = selectedItems?.length === 1;
   return (
     <div>
       <aside className="flex items-center justify-between">
@@ -80,7 +88,27 @@ const Rides = () => {
             <SearchInputComp className="!w-[220px]" />
           </div>
           <div>
-            <Assign />
+            <Assign
+              onClick={() => setOpenAssign(selectedState ? true : false)}
+              className={`${selectedState ? "bg-blueShade text-white" : ""}`}
+            />
+            {openAssign && (
+              <Dialog onOpenChange={setOpenAssign} open={openAssign}>
+                <DialogContent
+                  className="!rounded-[20px] "
+                  style={{
+                    maxWidth: "70vw",
+                  }}
+                >
+                  <DialogTitle className="text-2xl font-medium text-mediumBlue">
+                    Available Drivers
+                  </DialogTitle>
+                  <div className="my-5 bg-[#E6E6E6] rounded-[12px] max-h-[60vh] overflow-y-scroll scrollbar-hidden">
+                    <AssignTable />
+                  </div>
+                </DialogContent>
+              </Dialog>
+            )}
           </div>
         </section>
       </section>

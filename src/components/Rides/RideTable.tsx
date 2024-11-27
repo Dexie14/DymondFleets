@@ -1,6 +1,10 @@
 import { useSelectStore } from "@/store/selectStore";
 import TableComponent from "../General/TableComp";
 
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { useState } from "react";
+import RideDetail from "./RideDetail";
+
 // Sample data type
 export type RideDataItem = {
   id: number;
@@ -57,6 +61,8 @@ const RideTable = () => {
 
   console.log(selectedItems, "selectedItems");
 
+  const [selectedRow, setSelectedRow] = useState<RideDataItem | null>(null);
+
   const headers = [
     {
       content: (
@@ -81,35 +87,42 @@ const RideTable = () => {
     { content: <> PAYMENT METHOD</> },
   ];
 
-  // Custom row render function
-  const renderRow = (item: RideDataItem, index: number) => (
-    <tr
-      key={index}
-      className="bg-white w-full text-textShade text-[13px] h-[60px] text-left font-medium"
-    >
-      <td className="py-1 px-4">
-        <span>
-          <input
-            type="checkbox"
-            checked={selectedItems.some((i) => i.id === item.id)}
-            onChange={(e) => {
-              if (e.target.checked) {
-                addItem(item);
-              } else {
-                removeItem(item.id);
-              }
-            }}
-          />
-        </span>
-      </td>
-      <td className="py-1 px-4">{item.rideId}</td>
-      <td className="py-1 px-4">{item?.PICKUP}</td>
-      <td className="py-1 px-4">{item?.DROP}</td>
-      <td className="py-1 px-4">{item?.TYPE}</td>
-      <td className="py-1 px-4">{item?.PASSENGERS}</td>
-      <td className="py-1 px-4">{item?.PAYMENT}</td>
-    </tr>
-  );
+  const renderRow = (item: RideDataItem, index: number) => {
+    const handleRowClick = (row: RideDataItem) => {
+      setSelectedRow(row);
+    };
+
+    return (
+      <tr
+        key={index}
+        onClick={() => handleRowClick(item)}
+        className="bg-white w-full text-textShade text-[13px] h-[60px] text-left font-medium cursor-pointer"
+      >
+        <td className="py-1 px-4">
+          <span>
+            <input
+              type="checkbox"
+              onClick={(e) => e.stopPropagation()}
+              checked={selectedItems.some((i) => i.id === item.id)}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  addItem(item);
+                } else {
+                  removeItem(item.id);
+                }
+              }}
+            />
+          </span>
+        </td>
+        <td className="py-1 px-4">{item.rideId}</td>
+        <td className="py-1 px-4">{item?.PICKUP}</td>
+        <td className="py-1 px-4">{item?.DROP}</td>
+        <td className="py-1 px-4">{item?.TYPE}</td>
+        <td className="py-1 px-4">{item?.PASSENGERS}</td>
+        <td className="py-1 px-4">{item?.PAYMENT}</td>
+      </tr>
+    );
+  };
 
   return (
     <div>
@@ -118,6 +131,21 @@ const RideTable = () => {
         data={sampleData}
         renderRow={renderRow}
       />
+      {selectedRow && (
+        <Dialog
+          open={selectedRow !== null}
+          onOpenChange={(open) => {
+            if (!open) setSelectedRow(null);
+          }}
+        >
+          <DialogContent className="!rounded-[20px] px-9 overflow-y-scroll scrollbar-hidden h-[80vh]">
+            <DialogTitle className="text-2xl font-medium text-foundationBlue">
+              Rides Detail
+            </DialogTitle>
+            <RideDetail selectedRow={selectedRow} />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
