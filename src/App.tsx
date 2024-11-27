@@ -13,8 +13,8 @@ import AdminLayout from "./components/layout/AdminLayout";
 import Dashboard from "./pages/dashboard";
 import Rides from "./pages/rides";
 import Transaction from "./pages/transaction";
-import Customer from "./pages/customer";
 import Driver from "./pages/drivers/Driver";
+import Users from "./pages/users";
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/rides" element={<Rides />} />
           <Route path="/admin/transaction" element={<Transaction />} />
-          <Route path="/admin/customers" element={<Customer />} />
+          <Route path="/admin/users" element={<Users />} />
           <Route path="/admin/driver" element={<Driver />} />
         </Route>
       </Routes>

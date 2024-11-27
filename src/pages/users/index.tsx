@@ -1,31 +1,39 @@
+import { FilterIcon } from "@/assets/svgComp/General";
 import CheckBoxFilter from "@/components/General/CheckBoxFilter";
 import Export from "@/components/General/Export";
+
 import FilterSelect from "@/components/General/FilterSelect";
 import InputFilter from "@/components/General/InputFilter";
 import Pagination from "@/components/General/Pagination";
 import ResetFilter from "@/components/General/ResetFilter";
 import SearchInputComp from "@/components/input/SearchInputComp";
-import TransTable from "@/components/Transactions/TransTable";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import UserTable from "@/components/User/UserTable";
 import { useState } from "react";
 
-const Transaction = () => {
+const Users = () => {
   const [openEmail, setOpenEmail] = useState<boolean>(false);
   const [openPhone, setOpenPhone] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
-
   return (
     <div>
       <aside className="flex items-center justify-between">
-        <h3 className="text-mediumBlue font-medium text-2xl">Transactions</h3>
+        <h3 className="text-mediumBlue font-medium text-2xl">Users</h3>
         <Export />
       </aside>
       <section className="bg-white rounded-[8px] px-3 py-2 my-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
+          <Button className="flex items-center hover:text-white bg-transparent gap-3 px-3 py-2 rounded-[4px] border text-textShade text-sm font-medium border-border">
+            <div className="mr-1">
+              <FilterIcon />
+            </div>
+            Filter
+          </Button>
           <Popover open={openEmail} onOpenChange={setOpenEmail}>
             <PopoverTrigger>
               <FilterSelect title=" Email" />
@@ -83,11 +91,11 @@ const Transaction = () => {
         </section>
       </section>
       <section className="my-3">
-        <TransTable />
+        <UserTable />
         <Pagination />
       </section>
     </div>
   );
 };
 
-export default Transaction;
+export default Users;

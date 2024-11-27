@@ -8,12 +8,12 @@ import RideDetail from "./RideDetail";
 // Sample data type
 export type RideDataItem = {
   id: number;
-  rideId: string;
-  PICKUP: string;
-  TYPE: string;
-  DROP: string;
-  PASSENGERS: string;
-  PAYMENT: string;
+  rideId?: string;
+  PICKUP?: string;
+  TYPE?: string;
+  DROP?: string;
+  PASSENGERS?: string;
+  PAYMENT?: string;
 };
 
 const sampleData: RideDataItem[] = [

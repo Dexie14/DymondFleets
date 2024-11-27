@@ -34,8 +34,8 @@ const sidebarItems: SidebarItem[] = [
     icon: <TransactionIcon />,
   },
   {
-    name: "Customers",
-    link: "/admin/customers",
+    name: "Users",
+    link: "/admin/users",
     icon: <CustomerIcon />,
   },
   {
