@@ -28,13 +28,14 @@ const Driver = () => {
 
   const { selectedItems } = useDriverSelectStore();
 
+
   const selectedState = selectedItems?.length === 1;
 
   return (
     <div>
       <aside className="flex items-center justify-between">
         <h3 className="text-mediumBlue font-medium text-2xl">Drivers</h3>
-        <Export />
+        <Export selectedItems={selectedItems}/>
       </aside>
       <section className="bg-white rounded-[8px] px-3 py-2 my-3 flex items-center justify-between">
         <div className="flex items-center gap-2">

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-import DymondFleet from "@/assets/DymondFleet.png";
+import logoColored from "@/assets/logoColored.png";
 
 import { ReactNode } from "react";
 import {
@@ -50,13 +50,13 @@ const Sidebar = () => {
 
   return (
     <div className="">
-      <Link to={"/"} className="sm:w-[80px] w-[50px] sm:h-[80px] h-[50px] ">
-        <div className="p-10">
-          <img src={DymondFleet} alt="logo" className="" />
+      <Link to={"/"} >
+        <div className="p-10 flex justify-center items-center">
+          <img src={logoColored} alt="logo" className="w-[100px] " />
         </div>
       </Link>
 
-      <main className="mt-5">
+      <main className="">
         {sidebarItems.map((item, index) => {
           const isActive = location.pathname === item.link;
           return (
@@ -72,7 +72,7 @@ const Sidebar = () => {
                 {isActive && (
                   <div className="h-[60px] w-2 bg-adminBlue rounded-r-[10px] absolute left-0" />
                 )}
-                <div className="flex gap-3 ml-8 items-center">
+                <div className="flex gap-3 ml-10 items-center">
                   {item.icon}
                   <p
                     className={`text-sm font-medium ${
