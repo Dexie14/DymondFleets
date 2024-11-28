@@ -1,3 +1,4 @@
+import { DriverDataItem } from "@/components/Driver/DriverTable";
 import { TransDataItem } from "@/components/Transactions/TransTable";
 import { UserDataItem } from "@/components/User/UserTable";
 import { create } from "zustand";
@@ -38,5 +39,6 @@ export function createSelectStore<T extends Identifiable>() {
 
 export const useTransSelectStore = createSelectStore<TransDataItem>();
 export const useUsersSelectStore = createSelectStore<UserDataItem>();
+export const useDriverSelectStore = createSelectStore<DriverDataItem>();
 
 

@@ -97,7 +97,7 @@ const AssignTable = () => {
                 </Button>
               </DialogTrigger>
               <DialogContent className="!rounded-[16px] w-[372px]">
-                <SuccessModal message="Ride assigned successfully" text="You have assigned 3 rides to Kayode Bayo"/>
+                <SuccessModal message="Ride assigned successfully" text="You have assigned ride to Kayode Bayo"/>
               </DialogContent>
             </Dialog>
           </span>

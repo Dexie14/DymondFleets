@@ -1,37 +1,56 @@
-import { UserDataItem } from "./UserTable";
-import user from "@/assets/user.png";
+import driverImage from "@/assets/driverImage.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import RidesHistoryTable from "./RidesHistoryTable";
-import PaymentHistoryTable from "./PaymentHistoryTable";
+import RidesHistoryTable from "../User/RidesHistoryTable";
+import PaymentHistoryTable from "../User/PaymentHistoryTable";
+import { DriverDataItem } from "./DriverTable";
+import ActiveRideTable from "./ActiveRideTable";
 
-const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
+const DriverDetail = ({ selectedRow }: { selectedRow: DriverDataItem }) => {
   return (
     <div>
       <aside className="flex items-center gap-6">
         <Avatar className="w-36 h-36 rounded-none">
-          <AvatarImage src={user} />
+          <AvatarImage src={driverImage} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div>
-          <h5 className="text-textShade text-lg font-semibold mb-4">
+          <h5 className="text-textShade text-lg font-semibold">
             {selectedRow?.name}
           </h5>
           <p
             className={`${
-              selectedRow?.status === "Approved"
+              selectedRow?.status === "Online"
                 ? "bg-[#EAFFEF] text-[#079D23]"
-                : selectedRow?.status === " Cancelled"
+                : selectedRow?.status === "Offline"
                 ? "bg-[#FFECEC] text-[#9D0707]"
                 : "text-[#B5983B] bg-[#FFFBEE]"
-            } font-medium text-sm flex items-center justify-center gap-2    rounded-[8px] w-fit px-2 py-1`}
+            } font-medium text-sm flex items-center justify-center gap-2   rounded-[8px] w-fit px-2 py-1 my-4`}
           >
             <div
               className={`h-3 w-3 ${
-                selectedRow?.status === "Approved" ? "bg-[#079D23]" : " bg-[#9D0707]"
+                selectedRow?.status === "Online"
+                  ? "bg-[#079D23]"
+                  : " bg-[#9D0707]"
               } rounded-full `}
             />
             {selectedRow?.status}
+          </p>
+          <p
+            className={`${
+              selectedRow?.assignStatus === "In-transit"
+                ? "bg-[#E6E8F3] text-blueShade"
+                : "text-[#B5983B] bg-[#FFFBEE]"
+            } font-medium text-sm flex items-center justify-center gap-2     rounded-[8px] w-fit px-2 py-1`}
+          >
+            <div
+              className={`h-3 w-3 ${
+                selectedRow?.assignStatus === "In-transit"
+                  ? "bg-blueShade"
+                  : " bg-[#B5983B]"
+              } rounded-full `}
+            />
+            {selectedRow?.assignStatus}
           </p>
         </div>
       </aside>
@@ -53,7 +72,7 @@ const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Address</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.address}
+          089 Kutch Green Apt. 448
         </p>
       </div>
       <section className="my-5">
@@ -71,6 +90,12 @@ const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
                 value="Payment"
               >
                 Payment History
+              </TabsTrigger>
+              <TabsTrigger
+                className="data-[state=active]:shadow-custom bg-transparent data-[state=active]:border-b data-[state=active]:border-blueShade data-[state=active]:text-blueShade text-mediumGrey text-sm font-medium"
+                value="ActiveRide"
+              >
+                Active Rides
               </TabsTrigger>
             </div>
           </TabsList>
@@ -90,10 +115,18 @@ const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
               </div>
             </h3>
           </TabsContent>
+          <TabsContent value="ActiveRide" className="">
+            <h3 className="font-bold text-xl text-foundationBlue my-3">
+              Active Rides
+              <div className=" bg-[#E6E6E6] rounded-[12px] my-5">
+                <ActiveRideTable />
+              </div>
+            </h3>
+          </TabsContent>
         </Tabs>
       </section>
     </div>
   );
 };
 
-export default UserDetail;
+export default DriverDetail;

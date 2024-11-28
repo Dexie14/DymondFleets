@@ -20,19 +20,30 @@ const CheckBoxFilter = ({ title, setOpen, listData }: FilterType) => {
           return (
             <div key={v4()} className="flex items-center gap-4">
               <input type="checkBox" />
-              {item?.includes("Online") || item?.includes("Offline") ? (
+              {item?.includes("Online") ||
+              item?.includes("Offline") ||
+              item?.includes("In-transit") ||
+              item?.includes("No assigned Order") ? (
                 <p
                   className={`${
                     item === "Online"
                       ? "bg-[#EAFFEF] text-[#079D23]"
                       : item === "Offline"
                       ? "bg-[#FFECEC] text-[#9D0707]"
+                      : item === "In-transit"
+                      ? "bg-[#E6E8F3] text-blueShade"
                       : "text-[#B5983B] bg-[#FFFBEE]"
                   } flex items-center justify-center gap-2 rounded-[8px] w-fit px-2 py-1`}
                 >
                   <div
                     className={`h-3 w-3 ${
-                      item === "Online" ? "bg-[#02B022]" : " bg-[#9D0707]"
+                      item === "Online"
+                        ? "bg-[#02B022]"
+                        : item === "In-transit"
+                        ? "bg-blueShade"
+                        : item === "Offline"
+                        ? "bg-[#9D0707]"
+                        : "bg-[#B5983B]"
                     } rounded-full `}
                   />
                   {item}
