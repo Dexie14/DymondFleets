@@ -11,7 +11,7 @@ const AuthHeader = () => {
       <Container className="py-10">
         <section className="flex sm:flex-row flex-col-reverse md:w-7/12 items-center justify-between">
           <Button
-            onClick={() => navigate("/")}
+            onClick={() => navigate(-1)}
             className="h-11 w-[175px] rounded-[8px] my-5 sm:my-0 bg-buttonGrey text-blueShade font-semibold hover:text-white"
           >
             <div className="mr-2">
