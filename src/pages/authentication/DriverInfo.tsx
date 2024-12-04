@@ -1,18 +1,25 @@
 import { Asterisk } from "@/assets/svgComp/General";
 import AuthUpload from "@/components/Auth/AuthUpload";
-// import SuccessModal from "@/components/Auth/SuccessModal";
+import SuccessModal from "@/components/Auth/SuccessModal";
 import InputField from "@/components/input/InputField";
 import AuthHeader from "@/components/menuBars/AuthHeader";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/Container";
 import useRegisterRider from "@/hooks/api/mutation/riders/useRegisterRider";
-// import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // export type FileState = {
 //   profilePhoto: File | null;
@@ -44,13 +51,18 @@ type FormData = z.infer<typeof DriverRegistrationschema>;
 const DriverInfo = () => {
   const { state } = useLocation();
 
+  const [success, setSuccess] = useState<boolean>(false);
+
   // console.log(state?.registrationData);
+  const navigate = useNavigate();
 
   const { mutate, isPending } = useRegisterRider();
 
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -102,29 +114,45 @@ const DriverInfo = () => {
     formData.append("vehicleCapacity", data.vehicleCapacity.toString());
     formData.append("vehicleYear", data.vehicleYear.toString());
     formData.append("vehicleMake", data.vehicleMake);
-    // formData.append("email", "sampleemail@gmail.com");
-    // formData.append("password", "password");
-    // formData.append("phone", "09036077643");
 
     console.log(files, "files");
+
+    const missingImages: string[] = []; 
     // Append file uploads
     Object.keys(files).forEach((key) => {
       const file = files[key];
       if (file) {
         console.log(`Appending ${key}:`, file);
         formData.append("image", file);
+      } else {
+        missingImages.push(key);
       }
     });
     // for (let [key, value] of formData.entries()) {
     //   console.log(key, value);
     // }
 
+    if (missingImages.length > 0) {
+
+      const firstMissingFile = missingImages[0];
+      toast.error(`Please upload the ${firstMissingFile} image.`);
+      // missingImages.forEach((imageKey: any) => {
+      //   toast.error(`Please upload the ${imageKey} image.`); 
+      // });
+      return; 
+    }
+
     mutate(formData, {
       onSuccess: (response: any) => {
-        toast.success(response?.message);
+        toast.success(response?.data?.message);
+        setSuccess(true);
+        reset();
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       },
       onError: (error: any) => {
-        toast.error(error?.message || "Error Sending Invite");
+        toast.error(error?.response?.data?.message || "Error Sending Invite");
       },
     });
   };
@@ -169,7 +197,7 @@ const DriverInfo = () => {
               onFileChange={handleFileChange}
             />
 
-            <div>
+            {/* <div>
               <p className="flex gap-2 items-center font-semibold">
                 Vehicle type
                 <Asterisk />
@@ -180,6 +208,27 @@ const DriverInfo = () => {
                 placeholder="AB235687"
                 error={errors?.vehicleType?.message}
               />
+            </div> */}
+
+            <div className="mb-4">
+              <p className="flex gap-2 items-center font-semibold">
+                Vehicle type <Asterisk />
+              </p>
+
+              <Select onValueChange={(value) => setValue("vehicleType", value)}>
+                <SelectTrigger className="w-full my-2 rounded-[8px] bg-selectColor h-[50px]">
+                  <SelectValue placeholder="Select an option" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Bike">Bike</SelectItem>
+                  <SelectItem value="Car ">Car </SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.vehicleType && (
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.vehicleType?.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -293,16 +342,15 @@ const DriverInfo = () => {
               />
             </div>
 
-            {/* <Dialog>
-              <DialogTrigger className="flex justify-center w-full"> */}
+            {/* <DialogTrigger className="flex justify-center w-full"> */}
             <Button className="h-12 w-[103px]  rounded-[8px] text-white bg-blueShade mx-auto my-10">
               {isPending ? "loading..." : "Finish"}
             </Button>
-            {/* </DialogTrigger>
+            <Dialog open={success} onOpenChange={setSuccess}>
               <DialogContent className="!rounded-[16px] w-[372px]">
                 <SuccessModal message="Registration successfully" />
               </DialogContent>
-            </Dialog> */}
+            </Dialog>
           </section>
         </form>
       </Container>

@@ -187,8 +187,8 @@ const Register = () => {
                   <SelectValue placeholder="Select an option" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="male">Male</SelectItem>
-                  <SelectItem value="female">Female</SelectItem>
+                  <SelectItem value="Male">Male</SelectItem>
+                  <SelectItem value="Female">Female</SelectItem>
                 </SelectContent>
               </Select>
             </div>
