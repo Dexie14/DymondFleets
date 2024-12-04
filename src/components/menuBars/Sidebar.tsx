@@ -1,5 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
+import Cookies from "js-cookie";
 import logoColored from "@/assets/logoColored.png";
 
 import { ReactNode } from "react";
@@ -10,6 +11,8 @@ import {
   RideIcon,
   TransactionIcon,
 } from "@/assets/svgComp/SidebarIcon";
+import { useAuthStore } from "@/store/authStore";
+import { toast } from "sonner";
 
 type SidebarItem = {
   name: string;
@@ -47,10 +50,22 @@ const sidebarItems: SidebarItem[] = [
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const {
+    //  currentUser,
+    logout,
+  } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+    Cookies.remove("accessToken");
+    toast.success("Logged out successfully");
+    navigate("/login");
+  };
 
   return (
-    <div className="">
-      <Link to={"/"} >
+    <div className="relative h-[80vh]">
+      <Link to={"/"}>
         <div className="p-10 flex justify-center items-center">
           <img src={logoColored} alt="logo" className="w-[100px] " />
         </div>
@@ -89,6 +104,14 @@ const Sidebar = () => {
           );
         })}
       </main>
+      <div className="ml-10 absolute bottom-0">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center p-2 space-x-1 rounded-lg text-foundationRed hover:text-adminBlue "
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

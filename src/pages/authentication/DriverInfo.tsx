@@ -46,7 +46,7 @@ const DriverInfo = () => {
 
   // console.log(state?.registrationData);
 
-  const { mutate } = useRegisterRider();
+  const { mutate, isPending } = useRegisterRider();
 
   const {
     register,
@@ -102,22 +102,22 @@ const DriverInfo = () => {
     formData.append("vehicleCapacity", data.vehicleCapacity.toString());
     formData.append("vehicleYear", data.vehicleYear.toString());
     formData.append("vehicleMake", data.vehicleMake);
-    formData.append("email", "sampleemail@gmail.com");
-    formData.append("password", "password");
-    formData.append("phone", "09036077643");
+    // formData.append("email", "sampleemail@gmail.com");
+    // formData.append("password", "password");
+    // formData.append("phone", "09036077643");
 
-    console.log(files, "files")
+    console.log(files, "files");
     // Append file uploads
     Object.keys(files).forEach((key) => {
       const file = files[key];
       if (file) {
-        console.log(`Appending ${key}:`, file); 
-        formData.append(key, file);
+        console.log(`Appending ${key}:`, file);
+        formData.append("image", file);
       }
     });
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(key, value);
+    // }
 
     mutate(formData, {
       onSuccess: (response: any) => {
@@ -253,10 +253,10 @@ const DriverInfo = () => {
                 <Asterisk />
               </p>
               <InputField
-              type="number"
+                type="number"
                 // {...register("vehicleCapacity")}
                 {...register("vehicleCapacity", {
-                  valueAsNumber: true, 
+                  valueAsNumber: true,
                 })}
                 name="vehicleCapacity"
                 placeholder=""
@@ -270,10 +270,10 @@ const DriverInfo = () => {
                 <Asterisk />
               </p>
               <InputField
-               type="number"
-               {...register("vehicleYear", {
-                 valueAsNumber: true, 
-               })}
+                type="number"
+                {...register("vehicleYear", {
+                  valueAsNumber: true,
+                })}
                 name="vehicleYear"
                 placeholder="2010"
                 error={errors?.vehicleYear?.message}
@@ -296,7 +296,7 @@ const DriverInfo = () => {
             {/* <Dialog>
               <DialogTrigger className="flex justify-center w-full"> */}
             <Button className="h-12 w-[103px]  rounded-[8px] text-white bg-blueShade mx-auto my-10">
-              Finish
+              {isPending ? "loading..." : "Finish"}
             </Button>
             {/* </DialogTrigger>
               <DialogContent className="!rounded-[16px] w-[372px]">

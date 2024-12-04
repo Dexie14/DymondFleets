@@ -3,14 +3,8 @@ import { createStore } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 export interface AuthData {
-  emailAddress: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
-  id: string;
+  email: string;
+  role: string;
 }
 
 interface AuthState {

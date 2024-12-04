@@ -59,7 +59,7 @@ const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
             placeholder={placeholder}
             ref={ref}
             {...rest}
-            className={` w-full placeholder:text-placeholderColor bg-transparent hover:bg-red-500 focus:outline-none text-sm `}
+            className={` w-full placeholder:text-placeholderColor bg-transparent focus:outline-none text-sm `}
           />
           {inputType === "password" ? (
             <div onClick={togglePassword}>
