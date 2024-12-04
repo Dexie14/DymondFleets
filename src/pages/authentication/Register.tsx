@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useState } from "react";
+// import { useState } from "react";
 import PasswordInput from "@/components/input/PasswordInput";
 
 const Registerschema = z.object({
@@ -37,7 +37,7 @@ const Registerschema = z.object({
   password: z
     .string()
     .min(8, { message: "password must contain at least 8 characters" }),
-  // role: z.string().min(1, { message: "Please select a role" }),
+  riderType: z.string().min(1, { message: "Please select a role" }),
   gender: z.string().min(1, { message: "Please select a role" }),
 
   phone: z
@@ -52,9 +52,9 @@ type FormData = z.infer<typeof Registerschema>;
 const Register = () => {
   const navigate = useNavigate();
 
-  const [selectRole, setSelectedRole] = useState<string>("");
+  // const [selectRole, setSelectedRole] = useState<string>("");
   // const [selectGender, setSelectedGender] = useState<string>("");
-  console.log(selectRole, "data");
+  // console.log(selectRole, "data");
   // console.log(selectGender, "data");
 
   const {
@@ -70,7 +70,7 @@ const Register = () => {
       phone: "",
       password: "",
       email: "",
-      // role: selectRole,
+      riderType: "",
     },
     resolver: zodResolver(Registerschema),
     mode: "onChange",
@@ -84,7 +84,7 @@ const Register = () => {
       email: data?.email,
       phone: data?.phone,
       password: data?.password,
-      // role: selectRole,
+      riderType: data?.riderType,
     };
     console.log(formData, "data");
 
@@ -111,14 +111,19 @@ const Register = () => {
                 I want to join Dymond Fleets as <Asterisk />
               </p>
 
-              <Select onValueChange={setSelectedRole}>
+              {errors.riderType && (
+                <div className="w-full border border-dashed border-adminRed px-4 py-1  my-7 text-errorBlack text-sm font-semibold">
+                  {errors.riderType?.message}
+                </div>
+              )}
+              <Select onValueChange={(value) => setValue("riderType", value)}>
                 <SelectTrigger className="w-full my-2 rounded-[8px] bg-selectColor h-[50px]">
                   <SelectValue placeholder="Select an option" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="driver">Driver</SelectItem>
-                  <SelectItem value="fleet">Fleet Driver</SelectItem>
-                  <SelectItem value="courier">Courier</SelectItem>
+                  <SelectItem value="Driver">Driver</SelectItem>
+                  <SelectItem value="FleetDriver">Fleet Driver</SelectItem>
+                  <SelectItem value="Courier">Courier</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -172,7 +177,7 @@ const Register = () => {
               )}
               <InputField {...register("phone")} />
             </div>
-            
+
             <div className="mb-4">
               <p className="flex gap-2 items-center font-semibold">
                 Gender <Asterisk />

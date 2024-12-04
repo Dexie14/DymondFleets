@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/Container";
 import useRegisterRider from "@/hooks/api/mutation/riders/useRegisterRider";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -42,7 +42,10 @@ const DriverRegistrationschema = z.object({
   vehicleCapacity: z
     .number()
     .min(1, { message: "Vehicle capacity is required" }),
-  vehicleYear: z.number().min(1, { message: "Vehicle year is required" }),
+  vehicleYear: z
+    .number()
+    .min(1000, { message: "Vehicle year is required and needs to be correct" })
+    .max(2030),
   vehicleMake: z.string().min(1, { message: "Vehicle make is required" }),
 });
 
@@ -53,8 +56,15 @@ const DriverInfo = () => {
 
   const [success, setSuccess] = useState<boolean>(false);
 
-  // console.log(state?.registrationData);
+  console.log(state);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (state === null) {
+      navigate("/register");
+    }
+  }, [state, navigate]);
 
   const { mutate, isPending } = useRegisterRider();
 
@@ -117,7 +127,7 @@ const DriverInfo = () => {
 
     console.log(files, "files");
 
-    const missingImages: string[] = []; 
+    const missingImages: string[] = [];
     // Append file uploads
     Object.keys(files).forEach((key) => {
       const file = files[key];
@@ -133,13 +143,12 @@ const DriverInfo = () => {
     // }
 
     if (missingImages.length > 0) {
-
       const firstMissingFile = missingImages[0];
       toast.error(`Please upload the ${firstMissingFile} image.`);
       // missingImages.forEach((imageKey: any) => {
-      //   toast.error(`Please upload the ${imageKey} image.`); 
+      //   toast.error(`Please upload the ${imageKey} image.`);
       // });
-      return; 
+      return;
     }
 
     mutate(formData, {
@@ -221,7 +230,7 @@ const DriverInfo = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Bike">Bike</SelectItem>
-                  <SelectItem value="Car ">Car </SelectItem>
+                  <SelectItem value="Car">Car</SelectItem>
                 </SelectContent>
               </Select>
               {errors.vehicleType && (
