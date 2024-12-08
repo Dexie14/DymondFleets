@@ -14,10 +14,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import useGetRides from "@/hooks/api/queries/rides/useGetRides";
 import { useSelectStore } from "@/store/selectStore";
 import { useState } from "react";
 
 const Rides = () => {
+  const { data: rideData } = useGetRides();
+
+  console.log(rideData?.data?.items, "rideData");
+
+  const rideTableData = rideData?.data?.items;
+
   const [openRide, setOpenRide] = useState<boolean>(false);
   const [openType, setOpenType] = useState<boolean>(false);
   const [openPay, setOpenPay] = useState<boolean>(false);
@@ -113,7 +120,7 @@ const Rides = () => {
         </section>
       </section>
       <section className="my-3">
-        <RideTable />
+        <RideTable rideTableData={rideTableData ?? []} />
         <Pagination />
       </section>
     </div>
@@ -121,3 +128,4 @@ const Rides = () => {
 };
 
 export default Rides;
+

@@ -1,4 +1,5 @@
-import { RideDataItem } from "./RideTable";
+import { RideDataItem } from "@/hooks/api/queries/rides/useGetRides";
+
 
 const RideDetail = ({ selectedRow }: { selectedRow: RideDataItem }) => {
   return (
@@ -6,7 +7,7 @@ const RideDetail = ({ selectedRow }: { selectedRow: RideDataItem }) => {
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Ride ID</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.rideId}
+          {selectedRow?._id}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
@@ -14,19 +15,19 @@ const RideDetail = ({ selectedRow }: { selectedRow: RideDataItem }) => {
           Pickup Location
         </h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.PICKUP}
+          {/* {selectedRow?.PICKUP} */}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Drop Location</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.DROP}
+          {/* {selectedRow?.DROP} */}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Ride Type</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.TYPE}
+          {selectedRow?.riderType}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
@@ -34,7 +35,7 @@ const RideDetail = ({ selectedRow }: { selectedRow: RideDataItem }) => {
           No of Passengers
         </h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.PASSENGERS}
+          {/* {selectedRow?.PASSENGERS} */}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
@@ -42,7 +43,7 @@ const RideDetail = ({ selectedRow }: { selectedRow: RideDataItem }) => {
           Payment Method
         </h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.PAYMENT}
+          {/* {selectedRow?.PAYMENT} */}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">

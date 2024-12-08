@@ -8,7 +8,7 @@ import DriverDetail from "./DriverDetail";
 
 // Sample data type
 export type DriverDataItem = {
-  id: number;
+  _id: string;
   name?: string;
   email?: string;
   number: string;
@@ -18,7 +18,7 @@ export type DriverDataItem = {
 
 const sampleData: DriverDataItem[] = [
   {
-    id: 1,
+    _id: "1",
     name: "Kayode Bayo",
     email: "KayodeBayo@gmail.com",
     number: "08067624207",
@@ -26,7 +26,7 @@ const sampleData: DriverDataItem[] = [
     status: "Online",
   },
   {
-    id: 2,
+    _id: "2",
     name: "Kayode Bayo",
     email: "KayodeBayo@gmail.com",
     number: "08067624207",
@@ -81,12 +81,12 @@ const DriverTable = () => {
             <input
               type="checkbox"
               onClick={(e) => e.stopPropagation()}
-              checked={selectedItems.some((i) => i.id === item.id)}
+              checked={selectedItems.some((i) => i._id === item._id)}
               onChange={(e) => {
                 if (e.target.checked) {
                   addItem(item);
                 } else {
-                  removeItem(item.id);
+                  removeItem(item._id);
                 }
               }}
             />

@@ -14,7 +14,7 @@ const getProfile = async (): Promise<ResType> => {
   return response.data;
 };
 
-  const useGetNews = () => {
+  const useGetProfile = () => {
     return useQuery<ResType>({
       queryKey: [QUERY_KEY_PROFILE], 
       queryFn: getProfile, 
@@ -22,4 +22,4 @@ const getProfile = async (): Promise<ResType> => {
     });
   };
 
-export default useGetNews;
+export default useGetProfile;

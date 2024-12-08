@@ -4,12 +4,15 @@ import avatar from "@/assets/avatar.png";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/authStore";
+// import useGetProfile from "@/hooks/api/queries/profile/useGetProfile";
 
 const AdminHeader = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const { currentUser } = useAuthStore();
 
-  console.log(currentUser, "ydd");
+  // const {data} = useGetProfile()
+
+  // console.log(data, "data");
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());

@@ -4,37 +4,42 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useUsersSelectStore } from "@/store/genericSelectStore";
 import UserDetail from "./UserDetail";
+import { UserDataItem } from "@/hooks/api/queries/user/useGetUsers";
 
 // Sample data type
-export type UserDataItem = {
-  id: number;
-  name?: string;
-  email?: string;
-  number: string;
-  address: string;
-  status: string;
+// export type UserDataItem = {
+//   id: number;
+//   name?: string;
+//   email?: string;
+//   number: string;
+//   address: string;
+//   status: string;
+// };
+
+// const sampleData: UserDataItem[] = [
+//   {
+//     id: 1,
+//     name: "Femi Adebayo",
+//     email: "FemiAdebayo@gmail.com",
+//     number: "08067624207",
+//     address: "089 Kutch Green Apt. 448",
+//     status: "Approved",
+//   },
+//   {
+//     id: 2,
+//     name: "Femi Adebayo",
+//     email: "FemiAdebayo@gmail.com",
+//     number: "08067624207",
+//     address: "089 Kutch Green Apt. 448",
+//     status: "Pending",
+//   },
+// ];
+
+type UserTableProps = {
+  userTableData: UserDataItem[];
 };
 
-const sampleData: UserDataItem[] = [
-  {
-    id: 1,
-    name: "Femi Adebayo",
-    email: "FemiAdebayo@gmail.com",
-    number: "08067624207",
-    address: "089 Kutch Green Apt. 448",
-    status: "Approved",
-  },
-  {
-    id: 2,
-    name: "Femi Adebayo",
-    email: "FemiAdebayo@gmail.com",
-    number: "08067624207",
-    address: "089 Kutch Green Apt. 448",
-    status: "Pending",
-  },
-];
-
-const UserTable = () => {
+const UserTable = ({ userTableData }: UserTableProps) => {
   const { selectedItems, addItem, removeItem, selectAll, clearAll } =
     useUsersSelectStore();
   console.log(selectedItems, "selectedItemsUser");
@@ -46,10 +51,10 @@ const UserTable = () => {
       content: (
         <input
           type="checkbox"
-          checked={selectedItems.length === sampleData.length}
+          checked={selectedItems.length === userTableData.length}
           onChange={(e) => {
             if (e.target.checked) {
-              selectAll(sampleData);
+              selectAll(userTableData);
             } else {
               clearAll();
             }
@@ -80,32 +85,32 @@ const UserTable = () => {
             <input
               type="checkbox"
               onClick={(e) => e.stopPropagation()}
-              checked={selectedItems.some((i) => i.id === item.id)}
+              checked={selectedItems.some((i) => i._id === item._id)}
               onChange={(e) => {
                 if (e.target.checked) {
                   addItem(item);
                 } else {
-                  removeItem(item.id);
+                  removeItem(item._id);
                 }
               }}
             />
           </span>
         </td>
-        <td className="py-1 px-4">{item.name}</td>
-        <td className="py-1 px-4">{item?.email}</td>
-        <td className="py-1 px-4">{item?.number}</td>
-        <td className="py-1 px-4">{item?.address}</td>
+        <td className="py-1 px-4"> expected name</td>
+        <td className="py-1 px-4"> expected email</td>
+        <td className="py-1 px-4">{item?.phoneNumber}</td>
+        <td className="py-1 px-4">expected address</td>
         <td className="py-1 px-4">
           <span
             className={`${
-              item?.status === "Approved"
+              item?.userRegistrationCompleted === true
                 ? "bg-[#EAFFEF] text-[#079D23]"
-                : item?.status === "Cancelled"
+                : item?.userRegistrationCompleted === false
                 ? "bg-[#FFECEC] text-[#9D0707]"
                 : "text-[#B5983B] bg-[#FFFBEE]"
             }  rounded-[8px] w-fit px-2 py-1`}
           >
-            {item?.status}
+            {item?.userRegistrationCompleted ? "True": "False"}
           </span>
         </td>
       </tr>
@@ -116,7 +121,7 @@ const UserTable = () => {
     <div>
       <TableComponent
         headers={headers}
-        data={sampleData}
+        data={userTableData}
         renderRow={renderRow}
       />
       {selectedRow && (

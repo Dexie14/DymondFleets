@@ -1,16 +1,16 @@
 import { DriverDataItem } from "@/components/Driver/DriverTable";
 import { TransDataItem } from "@/components/Transactions/TransTable";
-import { UserDataItem } from "@/components/User/UserTable";
+import { UserDataItem } from "@/hooks/api/queries/user/useGetUsers";
 import { create } from "zustand";
 
 interface Identifiable {
-  id: number;
+  _id: string;
 }
 
 export interface SelectState<T extends Identifiable> {
   selectedItems: T[];
   addItem: (item: T) => void;
-  removeItem: (itemId: number) => void;
+  removeItem: (itemId: string) => void;
   selectAll: (items: T[]) => void;
   clearAll: () => void;
 }
@@ -24,7 +24,7 @@ export function createSelectStore<T extends Identifiable>() {
       })),
     removeItem: (itemId) =>
       set((state) => ({
-        selectedItems: state.selectedItems.filter((i) => i.id !== itemId),
+        selectedItems: state.selectedItems.filter((i) => i._id !== itemId),
       })),
     selectAll: (items) =>
       set({

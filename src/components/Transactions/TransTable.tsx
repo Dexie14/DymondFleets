@@ -7,7 +7,7 @@ import TransDetail from "./TransDetail";
 
 // Sample data type
 export type TransDataItem = {
-  id: number;
+  _id: string;
   transId?: string;
   amount?: string;
   date: string;
@@ -18,7 +18,7 @@ export type TransDataItem = {
 
 const sampleData: TransDataItem[] = [
   {
-    id: 1,
+    _id: "1",
     transId: "#3456740009",
     amount: "#2000",
     date: "8 November, 2024",
@@ -27,7 +27,7 @@ const sampleData: TransDataItem[] = [
     PAYMENT: "Cash",
   },
   {
-    id: 2,
+    _id: "2",
     transId: "#3456740009",
     amount: "#2000",
     date: "8 November, 2024",
@@ -36,7 +36,7 @@ const sampleData: TransDataItem[] = [
     PAYMENT: "Card",
   },
   {
-    id: 3,
+    _id: "3",
     transId: "#3456740009",
     amount: "#2000",
     date: "8 November, 2024",
@@ -93,12 +93,12 @@ const TransTable = () => {
             <input
               type="checkbox"
               onClick={(e) => e.stopPropagation()}
-              checked={selectedItems.some((i) => i.id === item.id)}
+              checked={selectedItems.some((i) => i._id === item._id)}
               onChange={(e) => {
                 if (e.target.checked) {
                   addItem(item);
                 } else {
-                  removeItem(item.id);
+                  removeItem(item._id);
                 }
               }}
             />

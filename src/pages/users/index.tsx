@@ -14,9 +14,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import UserTable from "@/components/User/UserTable";
+import useGetUsers from "@/hooks/api/queries/user/useGetUsers";
 import { useState } from "react";
 
 const Users = () => {
+  const { data: usersData } = useGetUsers();
+  console.log(usersData, "usersData");
+
+  const userTableData = usersData?.data?.items;
+
   const [openEmail, setOpenEmail] = useState<boolean>(false);
   const [openPhone, setOpenPhone] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -91,7 +97,7 @@ const Users = () => {
         </section>
       </section>
       <section className="my-3">
-        <UserTable />
+        <UserTable userTableData={userTableData ?? []}/>
         <Pagination />
       </section>
     </div>

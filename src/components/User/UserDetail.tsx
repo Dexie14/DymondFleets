@@ -1,9 +1,10 @@
-import { UserDataItem } from "./UserTable";
+
 import user from "@/assets/user.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RidesHistoryTable from "./RidesHistoryTable";
 import PaymentHistoryTable from "./PaymentHistoryTable";
+import { UserDataItem } from "@/hooks/api/queries/user/useGetUsers";
 
 const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
   return (
@@ -15,23 +16,23 @@ const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
         </Avatar>
         <div>
           <h5 className="text-textShade text-lg font-semibold mb-4">
-            {selectedRow?.name}
+            {/* {selectedRow?.name} */}
           </h5>
           <p
             className={`${
-              selectedRow?.status === "Approved"
+              selectedRow?.userRegistrationCompleted === true
                 ? "bg-[#EAFFEF] text-[#079D23]"
-                : selectedRow?.status === " Cancelled"
+                : selectedRow?.userRegistrationCompleted === false
                 ? "bg-[#FFECEC] text-[#9D0707]"
                 : "text-[#B5983B] bg-[#FFFBEE]"
             } font-medium text-sm flex items-center justify-center gap-2    rounded-[8px] w-fit px-2 py-1`}
           >
             <div
               className={`h-3 w-3 ${
-                selectedRow?.status === "Approved" ? "bg-[#079D23]" : " bg-[#9D0707]"
+                selectedRow?.userRegistrationCompleted === true ? "bg-[#079D23]" : " bg-[#9D0707]"
               } rounded-full `}
             />
-            {selectedRow?.status}
+            {selectedRow?.userRegistrationCompleted ? "True" : "False"}
           </p>
         </div>
       </aside>
@@ -41,19 +42,19 @@ const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Email</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.email}
+          {/* {selectedRow?.email} */}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Phone Number</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.number}
+          {selectedRow?.phoneNumber}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Address</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.address}
+          {/* {selectedRow?.address} */}
         </p>
       </div>
       <section className="my-5">
