@@ -15,6 +15,7 @@ import Rides from "./pages/rides";
 import Transaction from "./pages/transaction";
 import Driver from "./pages/drivers/Driver";
 import Users from "./pages/users";
+import { ProtectedRoute } from "./utils/ProtectedRoute";
 
 function App() {
   return (
@@ -29,12 +30,14 @@ function App() {
         <Route path="/policy" element={<Policy />}></Route>
         <Route path="/login" element={<Login />}></Route>
 
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/admin/rides" element={<Rides />} />
-          <Route path="/admin/transaction" element={<Transaction />} />
-          <Route path="/admin/users" element={<Users />} />
-          <Route path="/admin/driver" element={<Driver />} />
+        <Route path="/admin" element={<ProtectedRoute />}>
+          <Route path="" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="rides" element={<Rides />} />
+            <Route path="transaction" element={<Transaction />} />
+            <Route path="users" element={<Users />} />
+            <Route path="driver" element={<Driver />} />
+          </Route>
         </Route>
       </Routes>
     </div>

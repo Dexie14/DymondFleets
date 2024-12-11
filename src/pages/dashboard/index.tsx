@@ -1,5 +1,6 @@
 import InfoCard from "@/components/Dashboard.tsx/InfoCard";
 import Statistics from "@/components/Dashboard.tsx/Statistics";
+import useGetOverview from "@/hooks/api/queries/dashboard/getOverview";
 export type InfoType = {
   title: string;
   type: string;
@@ -57,6 +58,9 @@ const Dashboard = () => {
       percentage: "+1.2%",
     },
   ];
+
+  const { data } = useGetOverview();
+  console.log(data, "dd");
 
   return (
     <div>

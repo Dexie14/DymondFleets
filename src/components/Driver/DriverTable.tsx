@@ -4,38 +4,43 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useDriverSelectStore } from "@/store/genericSelectStore";
 import DriverDetail from "./DriverDetail";
+import { DriverDataItem } from "@/hooks/api/queries/drivers/useDriver";
 // import UserDetail from "./UserDetail";
 
 // Sample data type
-export type DriverDataItem = {
-  _id: string;
-  name?: string;
-  email?: string;
-  number: string;
-  assignStatus: string;
-  status: string;
-};
+// export type DriverDataItem = {
+//   _id: string;
+//   name?: string;
+//   email?: string;
+//   number: string;
+//   assignStatus: string;
+//   status: string;
+// };
 
-const sampleData: DriverDataItem[] = [
-  {
-    _id: "1",
-    name: "Kayode Bayo",
-    email: "KayodeBayo@gmail.com",
-    number: "08067624207",
-    assignStatus: "In-transit",
-    status: "Online",
-  },
-  {
-    _id: "2",
-    name: "Kayode Bayo",
-    email: "KayodeBayo@gmail.com",
-    number: "08067624207",
-    assignStatus: "No assigned Order",
-    status: "Offline",
-  },
-];
+// const sampleData: DriverDataItem[] = [
+//   {
+//     _id: "1",
+//     name: "Kayode Bayo",
+//     email: "KayodeBayo@gmail.com",
+//     number: "08067624207",
+//     assignStatus: "In-transit",
+//     status: "Online",
+//   },
+//   {
+//     _id: "2",
+//     name: "Kayode Bayo",
+//     email: "KayodeBayo@gmail.com",
+//     number: "08067624207",
+//     assignStatus: "No assigned Order",
+//     status: "Offline",
+//   },
+// ];
 
-const DriverTable = () => {
+const DriverTable = ({
+  DriverTableData,
+}: {
+  DriverTableData: DriverDataItem[];
+}) => {
   const { selectedItems, addItem, removeItem, selectAll, clearAll } =
     useDriverSelectStore();
   console.log(selectedItems, "selectedItemsUser");
@@ -47,10 +52,10 @@ const DriverTable = () => {
       content: (
         <input
           type="checkbox"
-          checked={selectedItems.length === sampleData.length}
+          checked={selectedItems.length === DriverTableData.length}
           onChange={(e) => {
             if (e.target.checked) {
-              selectAll(sampleData);
+              selectAll(DriverTableData);
             } else {
               clearAll();
             }
@@ -92,44 +97,46 @@ const DriverTable = () => {
             />
           </span>
         </td>
-        <td className="py-1 px-4">{item.name}</td>
+        <td className="py-1 px-4">
+          {item.firstName} {item?.lastName}
+        </td>
         <td className="py-1 px-4">{item?.email}</td>
-        <td className="py-1 px-4">{item?.number}</td>
+        <td className="py-1 px-4">{item?.phone}</td>
         <td className="py-1 px-4">
           {" "}
           <span
             className={`${
-              item?.assignStatus === "In-transit"
+              item?.riderStatus === "In-transit"
                 ? "bg-[#E6E8F3] text-blueShade"
                 : "text-[#B5983B] bg-[#FFFBEE]"
             }  flex items-center justify-center gap-2 rounded-[8px] w-fit px-2 py-1`}
           >
             <div
               className={`h-3 w-3 ${
-                item?.assignStatus === "In-transit"
+                item?.riderStatus === "In-transit"
                   ? "bg-blueShade"
                   : " bg-[#B5983B]"
               } rounded-full `}
             />
-            {item?.assignStatus}
+            {item?.riderStatus} In-transit Expected
           </span>
         </td>
         <td className="py-1 px-4">
           <span
             className={`${
-              item?.status === "Online"
+              item?.riderStatus === "Active"
                 ? "bg-[#EAFFEF] text-[#079D23]"
-                : item?.status === "Offline"
+                : item?.riderStatus === "Rejected"
                 ? "bg-[#FFECEC] text-[#9D0707]"
                 : "text-[#B5983B] bg-[#FFFBEE]"
             } flex items-center justify-center gap-2  rounded-[8px] w-fit px-2 py-1`}
           >
             <div
               className={`h-3 w-3 ${
-                item?.status === "Online" ? "bg-[#079D23]" : " bg-[#9D0707]"
+                item?.riderStatus === "Active" ? "bg-[#079D23]" : " bg-[#9D0707]"
               } rounded-full `}
             />
-            {item?.status}
+            {item?.riderStatus}
           </span>
         </td>
       </tr>
@@ -140,7 +147,7 @@ const DriverTable = () => {
     <div>
       <TableComponent
         headers={headers}
-        data={sampleData}
+        data={DriverTableData}
         renderRow={renderRow}
       />
       {selectedRow && (

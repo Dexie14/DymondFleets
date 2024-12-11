@@ -99,7 +99,7 @@ const UserTable = ({ userTableData }: UserTableProps) => {
         <td className="py-1 px-4"> {item?.firstName} {item?.lastName}</td>
         <td className="py-1 px-4"> {item?.email}</td>
         <td className="py-1 px-4">{item?.phoneNumber}</td>
-        <td className="py-1 px-4">expected address</td>
+        <td className="py-1 px-4">{item?.userlocation?.address}</td>
         <td className="py-1 px-4">
           <span
             className={`${

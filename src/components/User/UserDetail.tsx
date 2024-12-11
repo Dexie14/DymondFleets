@@ -1,4 +1,3 @@
-
 import user from "@/assets/user.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,11 +11,11 @@ const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
       <aside className="flex items-center gap-6">
         <Avatar className="w-36 h-36 rounded-none">
           <AvatarImage src={user} />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback> {selectedRow?.firstName[0]} {selectedRow?.lastName[0]}</AvatarFallback>
         </Avatar>
         <div>
           <h5 className="text-textShade text-lg font-semibold mb-4">
-            {/* {selectedRow?.name} */}
+            {selectedRow?.firstName} {selectedRow?.lastName}
           </h5>
           <p
             className={`${
@@ -29,7 +28,9 @@ const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
           >
             <div
               className={`h-3 w-3 ${
-                selectedRow?.userRegistrationCompleted === true ? "bg-[#079D23]" : " bg-[#9D0707]"
+                selectedRow?.userRegistrationCompleted === true
+                  ? "bg-[#079D23]"
+                  : " bg-[#9D0707]"
               } rounded-full `}
             />
             {selectedRow?.userRegistrationCompleted ? "True" : "False"}
@@ -42,7 +43,7 @@ const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Email</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {/* {selectedRow?.email} */}
+          {selectedRow?.email}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
@@ -54,7 +55,7 @@ const UserDetail = ({ selectedRow }: { selectedRow: UserDataItem }) => {
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Address</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {/* {selectedRow?.address} */}
+          {selectedRow?.userlocation?.address}
         </p>
       </div>
       <section className="my-5">

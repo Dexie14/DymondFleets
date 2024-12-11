@@ -20,7 +20,18 @@ export interface UserDataItem {
   userRegistrationCompleted: boolean;
   createdAt: string;
   updatedAt: string;
+  userlocation: userlocationType;
   __v: number;
+}
+
+export interface userlocationType {
+  coordinates: Coordinates;
+  address: string;
+}
+
+export interface Coordinates {
+  lat: number;
+  lng: number;
 }
 
 export const QUERY_KEY_USERS = "getUsers";

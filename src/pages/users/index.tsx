@@ -18,7 +18,7 @@ import useGetUsers from "@/hooks/api/queries/user/useGetUsers";
 import { useState } from "react";
 
 const Users = () => {
-  const { data: usersData } = useGetUsers();
+  const { data: usersData, isPending } = useGetUsers();
   console.log(usersData, "usersData");
 
   const userTableData = usersData?.data?.items;
@@ -96,10 +96,16 @@ const Users = () => {
           </div>
         </section>
       </section>
-      <section className="my-3">
-        <UserTable userTableData={userTableData ?? []}/>
-        <Pagination />
-      </section>
+      {isPending ? (
+        <div>
+          <p className="text-center">Loading...</p>
+        </div>
+      ) : (
+        <section className="my-3">
+          <UserTable userTableData={userTableData ?? []} />
+          <Pagination />
+        </section>
+      )}
     </div>
   );
 };

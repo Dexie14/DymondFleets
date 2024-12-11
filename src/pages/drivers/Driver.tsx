@@ -18,8 +18,15 @@ import Assign from "@/components/General/Assign";
 import { useDriverSelectStore } from "@/store/genericSelectStore";
 import DriverTable from "@/components/Driver/DriverTable";
 import RideAssignTable from "@/components/Driver/RideAssignTable";
+import useGetDriver from "@/hooks/api/queries/drivers/useDriver";
 
 const Driver = () => {
+  const { data: DriverData, isPending } = useGetDriver();
+
+  console.log(DriverData?.data?.items, "rideData");
+
+  const DriverTableData = DriverData?.data?.items;
+
   const [openPhone, setOpenPhone] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [openOrderStatus, setOpenOrderStatus] = useState<boolean>(false);
@@ -28,14 +35,13 @@ const Driver = () => {
 
   const { selectedItems } = useDriverSelectStore();
 
-
   const selectedState = selectedItems?.length === 1;
 
   return (
     <div>
       <aside className="flex items-center justify-between">
         <h3 className="text-mediumBlue font-medium text-2xl">Drivers</h3>
-        <Export selectedItems={selectedItems}/>
+        <Export selectedItems={selectedItems} />
       </aside>
       <section className="bg-white rounded-[8px] px-3 py-2 my-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -117,10 +123,18 @@ const Driver = () => {
           </div>
         </section>
       </section>
-      <section className="my-3">
-        <DriverTable/>
-        <Pagination />
-      </section>
+      {isPending ? (
+        <div>
+          <p className="text-center">Loading...</p>
+        </div>
+      ) : DriverTableData && DriverTableData?.length > 0 ? (
+        <section className="my-3">
+          <DriverTable DriverTableData={DriverTableData ?? []} />
+          <Pagination />
+        </section>
+      ) : (
+        <p className="text-center">no data available</p>
+      )}
     </div>
   );
 };

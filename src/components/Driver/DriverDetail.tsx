@@ -1,56 +1,58 @@
-import driverImage from "@/assets/driverImage.png";
+// import driverImage from "@/assets/driverImage.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RidesHistoryTable from "../User/RidesHistoryTable";
 import PaymentHistoryTable from "../User/PaymentHistoryTable";
-import { DriverDataItem } from "./DriverTable";
 import ActiveRideTable from "./ActiveRideTable";
+import { DriverDataItem } from "@/hooks/api/queries/drivers/useDriver";
 
 const DriverDetail = ({ selectedRow }: { selectedRow: DriverDataItem }) => {
   return (
     <div>
       <aside className="flex items-center gap-6">
         <Avatar className="w-36 h-36 rounded-none">
-          <AvatarImage src={driverImage} />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage src={selectedRow?.profilePicUrl} />
+          <AvatarFallback>
+            {selectedRow?.firstName[0]} {selectedRow?.lastName[0]}
+          </AvatarFallback>
         </Avatar>
         <div>
           <h5 className="text-textShade text-lg font-semibold">
-            {selectedRow?.name}
+            {selectedRow?.firstName} {selectedRow?.lastName}
           </h5>
           <p
             className={`${
-              selectedRow?.status === "Online"
+              selectedRow?.riderStatus === "Active"
                 ? "bg-[#EAFFEF] text-[#079D23]"
-                : selectedRow?.status === "Offline"
+                : selectedRow?.riderStatus === "Rejected"
                 ? "bg-[#FFECEC] text-[#9D0707]"
                 : "text-[#B5983B] bg-[#FFFBEE]"
             } font-medium text-sm flex items-center justify-center gap-2   rounded-[8px] w-fit px-2 py-1 my-4`}
           >
             <div
               className={`h-3 w-3 ${
-                selectedRow?.status === "Online"
+                selectedRow?.riderStatus === "Online"
                   ? "bg-[#079D23]"
                   : " bg-[#9D0707]"
               } rounded-full `}
             />
-            {selectedRow?.status}
+            {selectedRow?.riderStatus}
           </p>
           <p
             className={`${
-              selectedRow?.assignStatus === "In-transit"
+              selectedRow?.riderStatus === "In-transit"
                 ? "bg-[#E6E8F3] text-blueShade"
                 : "text-[#B5983B] bg-[#FFFBEE]"
             } font-medium text-sm flex items-center justify-center gap-2     rounded-[8px] w-fit px-2 py-1`}
           >
             <div
               className={`h-3 w-3 ${
-                selectedRow?.assignStatus === "In-transit"
+                selectedRow?.riderStatus === "In-transit"
                   ? "bg-blueShade"
                   : " bg-[#B5983B]"
               } rounded-full `}
             />
-            {selectedRow?.assignStatus}
+            {selectedRow?.riderStatus} In-transit Expected
           </p>
         </div>
       </aside>
@@ -66,13 +68,13 @@ const DriverDetail = ({ selectedRow }: { selectedRow: DriverDataItem }) => {
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Phone Number</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.number}
+          {selectedRow?.phone}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Address</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          089 Kutch Green Apt. 448
+          {selectedRow?.address}
         </p>
       </div>
       <section className="my-5">
