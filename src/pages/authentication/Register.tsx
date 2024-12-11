@@ -11,13 +11,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useNavigate } from "react-router-dom";
-// import { toast } from "sonner";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-// import { useState } from "react";
 import PasswordInput from "@/components/input/PasswordInput";
+import { useRegistrationStore } from "@/store/registerStore";
 
 const Registerschema = z.object({
   email: z
@@ -52,10 +51,7 @@ type FormData = z.infer<typeof Registerschema>;
 const Register = () => {
   const navigate = useNavigate();
 
-  // const [selectRole, setSelectedRole] = useState<string>("");
-  // const [selectGender, setSelectedGender] = useState<string>("");
-  // console.log(selectRole, "data");
-  // console.log(selectGender, "data");
+  const { formData, setFormData } = useRegistrationStore();
 
   const {
     register,
@@ -63,15 +59,16 @@ const Register = () => {
     setValue,
     formState: { errors },
   } = useForm<FormData>({
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      gender: "",
-      phone: "",
-      password: "",
-      email: "",
-      riderType: "",
-    },
+    // defaultValues: {
+    //   firstName: "",
+    //   lastName: "",
+    //   gender: "",
+    //   phone: "",
+    //   password: "",
+    //   email: "",
+    //   riderType: "",
+    // },
+    defaultValues: formData,
     resolver: zodResolver(Registerschema),
     mode: "onChange",
   });
@@ -89,6 +86,7 @@ const Register = () => {
     console.log(formData, "data");
 
     if (formData) {
+      setFormData(formData);
       navigate("/driver-information", {
         state: {
           registrationData: formData,

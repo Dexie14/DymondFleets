@@ -12,6 +12,9 @@ type ResType = {
 export interface UserDataItem {
   _id: string;
   phoneNumber: string;
+  email: string;
+  firstName: string;
+  lastName: string;
   isVerified: boolean;
   isBlocked: boolean;
   userRegistrationCompleted: boolean;

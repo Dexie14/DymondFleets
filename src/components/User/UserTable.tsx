@@ -96,8 +96,8 @@ const UserTable = ({ userTableData }: UserTableProps) => {
             />
           </span>
         </td>
-        <td className="py-1 px-4"> expected name</td>
-        <td className="py-1 px-4"> expected email</td>
+        <td className="py-1 px-4"> {item?.firstName} {item?.lastName}</td>
+        <td className="py-1 px-4"> {item?.email}</td>
         <td className="py-1 px-4">{item?.phoneNumber}</td>
         <td className="py-1 px-4">expected address</td>
         <td className="py-1 px-4">
