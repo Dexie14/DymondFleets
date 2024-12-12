@@ -5,8 +5,16 @@ type ResType = {
   success: boolean;
   data: {
     items: DriverDataItem[];
-    pagedInfo: any;
+    pagedInfo: PaginationType;
   };
+};
+
+export type PaginationType = {
+  hasNext: boolean;
+  hasPrevious: boolean;
+  limit: number;
+  page: number;
+  total: number;
 };
 
 export interface DriverDataItem {
@@ -46,16 +54,17 @@ export interface Location {
 
 export const QUERY_KEY_DRIVERS = "getDrivers";
 
-const getDrivers = async (): Promise<ResType> => {
-  const response = await axiosInstance.get(`/admin/riders/paginated`);
+const getDrivers = async (params: Record<string, any> = {}): Promise<ResType> => {
+  const response = await axiosInstance.get(`/admin/riders/paginated`, { params });
 
   return response.data;
 };
 
-const useGetDriver = () => {
+const useGetDriver = (params?: Record<string, any>) => {
   return useQuery<ResType>({
-    queryKey: [QUERY_KEY_DRIVERS],
-    queryFn: getDrivers,
+    queryKey: [QUERY_KEY_DRIVERS, params],
+    // queryFn: getDrivers,
+    queryFn: () => getDrivers(params), 
     staleTime: 10,
   });
 };

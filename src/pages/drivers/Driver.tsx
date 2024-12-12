@@ -21,11 +21,21 @@ import RideAssignTable from "@/components/Driver/RideAssignTable";
 import useGetDriver from "@/hooks/api/queries/drivers/useDriver";
 
 const Driver = () => {
-  const { data: DriverData, isPending } = useGetDriver();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [entriesPerPage] = useState(10);
 
+  const { data: DriverData, isPending } = useGetDriver({
+    page: currentPage,
+    limit: entriesPerPage,
+  });
   console.log(DriverData?.data?.items, "rideData");
 
   const DriverTableData = DriverData?.data?.items;
+  const DriverTablePagination = DriverData?.data?.pagedInfo;
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   const [openPhone, setOpenPhone] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -130,7 +140,11 @@ const Driver = () => {
       ) : DriverTableData && DriverTableData?.length > 0 ? (
         <section className="my-3">
           <DriverTable DriverTableData={DriverTableData ?? []} />
-          <Pagination />
+          <Pagination
+            TablePagination={DriverTablePagination}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </section>
       ) : (
         <p className="text-center">no data available</p>

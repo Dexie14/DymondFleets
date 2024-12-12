@@ -3,7 +3,7 @@ import CheckBoxFilter from "@/components/General/CheckBoxFilter";
 import Export from "@/components/General/Export";
 import FilterSelect from "@/components/General/FilterSelect";
 import InputFilter from "@/components/General/InputFilter";
-import Pagination from "@/components/General/Pagination";
+// import Pagination from "@/components/General/Pagination";
 import ResetFilter from "@/components/General/ResetFilter";
 import SearchInputComp from "@/components/input/SearchInputComp";
 import AssignTable from "@/components/Rides/AssignTable";
@@ -121,7 +121,7 @@ const Rides = () => {
       </section>
       <section className="my-3">
         <RideTable rideTableData={rideTableData ?? []} />
-        <Pagination />
+        {/* <Pagination /> */}
       </section>
     </div>
   );

@@ -5,8 +5,16 @@ type ResType = {
   success: boolean;
   data: {
     items: UserDataItem[];
-    pagedInfo: any;
+    pagedInfo: PaginationType;
   };
+};
+
+export type PaginationType = {
+  hasNext: boolean;
+  hasPrevious: boolean;
+  limit: number;
+  page: number;
+  total: number;
 };
 
 export interface UserDataItem {
@@ -36,16 +44,18 @@ export interface Coordinates {
 
 export const QUERY_KEY_USERS = "getUsers";
 
-const getUsers = async (): Promise<ResType> => {
-  const response = await axiosInstance.get(`/admin/users/paginated`);
+const getUsers = async (params: Record<string, any> = {}): Promise<ResType> => {
+  const response = await axiosInstance.get(`/admin/users/paginated`, {
+    params,
+  });
 
   return response.data;
 };
 
-const useGetUsers = () => {
+const useGetUsers = (params?: Record<string, any>) => {
   return useQuery<ResType>({
-    queryKey: [QUERY_KEY_USERS],
-    queryFn: getUsers,
+    queryKey: [QUERY_KEY_USERS, params],
+    queryFn: () => getUsers(params),
     staleTime: 10,
   });
 };

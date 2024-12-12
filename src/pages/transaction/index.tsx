@@ -2,7 +2,7 @@ import CheckBoxFilter from "@/components/General/CheckBoxFilter";
 import Export from "@/components/General/Export";
 import FilterSelect from "@/components/General/FilterSelect";
 import InputFilter from "@/components/General/InputFilter";
-import Pagination from "@/components/General/Pagination";
+// import Pagination from "@/components/General/Pagination";
 import ResetFilter from "@/components/General/ResetFilter";
 import SearchInputComp from "@/components/input/SearchInputComp";
 import TransTable from "@/components/Transactions/TransTable";
@@ -11,9 +11,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import useGetTrans from "@/hooks/api/queries/transaction/useGetTrans";
 import { useState } from "react";
 
 const Transaction = () => {
+  const { data: TransData } = useGetTrans();
+
+  console.log(TransData, "TransData");
   const [openEmail, setOpenEmail] = useState<boolean>(false);
   const [openPhone, setOpenPhone] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -84,7 +88,7 @@ const Transaction = () => {
       </section>
       <section className="my-3">
         <TransTable />
-        <Pagination />
+        {/* <Pagination /> */}
       </section>
     </div>
   );

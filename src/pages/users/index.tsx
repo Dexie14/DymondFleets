@@ -18,10 +18,22 @@ import useGetUsers from "@/hooks/api/queries/user/useGetUsers";
 import { useState } from "react";
 
 const Users = () => {
-  const { data: usersData, isPending } = useGetUsers();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [entriesPerPage] = useState(10);
+
+  const { data: usersData, isPending } = useGetUsers({
+    page: currentPage,
+    limit: entriesPerPage,
+  });
   console.log(usersData, "usersData");
 
   const userTableData = usersData?.data?.items;
+
+  const UserTablePagination = usersData?.data?.pagedInfo;
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   const [openEmail, setOpenEmail] = useState<boolean>(false);
   const [openPhone, setOpenPhone] = useState<boolean>(false);
@@ -103,7 +115,11 @@ const Users = () => {
       ) : (
         <section className="my-3">
           <UserTable userTableData={userTableData ?? []} />
-          <Pagination />
+          <Pagination
+            TablePagination={UserTablePagination}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </section>
       )}
     </div>
