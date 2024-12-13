@@ -15,19 +15,19 @@ const RideDetail = ({ selectedRow }: { selectedRow: RideDataItem }) => {
           Pickup Location
         </h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {/* {selectedRow?.PICKUP} */}
+          {selectedRow?.origin?.address}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Drop Location</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {/* {selectedRow?.DROP} */}
+          {selectedRow?.destination?.address}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Ride Type</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.riderType}
+          {selectedRow?.type}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
@@ -35,7 +35,7 @@ const RideDetail = ({ selectedRow }: { selectedRow: RideDataItem }) => {
           No of Passengers
         </h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {/* {selectedRow?.PASSENGERS} */}
+          {/* {selectedRow?.PASSENGERS} */} expected
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
@@ -43,7 +43,7 @@ const RideDetail = ({ selectedRow }: { selectedRow: RideDataItem }) => {
           Payment Method
         </h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {/* {selectedRow?.PAYMENT} */}
+          {/* {selectedRow?.PAYMENT} */} expected
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">

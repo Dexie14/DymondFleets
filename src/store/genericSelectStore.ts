@@ -1,6 +1,7 @@
 
-import { TransDataItem } from "@/components/Transactions/TransTable";
+
 import { DriverDataItem } from "@/hooks/api/queries/drivers/useDriver";
+import { TransDataItem } from "@/hooks/api/queries/transaction/useGetTrans";
 import { UserDataItem } from "@/hooks/api/queries/user/useGetUsers";
 import { create } from "zustand";
 

@@ -4,49 +4,57 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useTransSelectStore } from "@/store/genericSelectStore";
 import TransDetail from "./TransDetail";
+import { TransDataItem } from "@/hooks/api/queries/transaction/useGetTrans";
+
+import { format, parseISO } from "date-fns";
+import { truncateText } from "@/lib/fns";
 
 // Sample data type
-export type TransDataItem = {
-  _id: string;
-  transId?: string;
-  amount?: string;
-  date: string;
-  TYPE: string;
-  status: string;
-  PAYMENT: string;
+// export type TransDataItem = {
+//   _id: string;
+//   transId?: string;
+//   amount?: string;
+//   date: string;
+//   TYPE: string;
+//   status: string;
+//   PAYMENT: string;
+// };
+
+// const sampleData: TransDataItem[] = [
+//   {
+//     _id: "1",
+//     transId: "#3456740009",
+//     amount: "#2000",
+//     date: "8 November, 2024",
+//     TYPE: "Ride Payment",
+//     status: "Approved",
+//     PAYMENT: "Cash",
+//   },
+//   {
+//     _id: "2",
+//     transId: "#3456740009",
+//     amount: "#2000",
+//     date: "8 November, 2024",
+//     TYPE: "Ride Payment",
+//     status: "Pending",
+//     PAYMENT: "Card",
+//   },
+//   {
+//     _id: "3",
+//     transId: "#3456740009",
+//     amount: "#2000",
+//     date: "8 November, 2024",
+//     TYPE: "Ride Payment",
+//     status: "Cancelled",
+//     PAYMENT: "Card",
+//   },
+// ];
+
+type TransTableProps = {
+  transTransData: TransDataItem[];
 };
 
-const sampleData: TransDataItem[] = [
-  {
-    _id: "1",
-    transId: "#3456740009",
-    amount: "#2000",
-    date: "8 November, 2024",
-    TYPE: "Ride Payment",
-    status: "Approved",
-    PAYMENT: "Cash",
-  },
-  {
-    _id: "2",
-    transId: "#3456740009",
-    amount: "#2000",
-    date: "8 November, 2024",
-    TYPE: "Ride Payment",
-    status: "Pending",
-    PAYMENT: "Card",
-  },
-  {
-    _id: "3",
-    transId: "#3456740009",
-    amount: "#2000",
-    date: "8 November, 2024",
-    TYPE: "Ride Payment",
-    status: "Cancelled",
-    PAYMENT: "Card",
-  },
-];
-
-const TransTable = () => {
+const TransTable = ({ transTransData }: TransTableProps) => {
   const { selectedItems, addItem, removeItem, selectAll, clearAll } =
     useTransSelectStore();
   console.log(selectedItems, "selectedItemsTrans");
@@ -58,10 +66,10 @@ const TransTable = () => {
       content: (
         <input
           type="checkbox"
-          checked={selectedItems.length === sampleData.length}
+          checked={selectedItems.length === transTransData.length}
           onChange={(e) => {
             if (e.target.checked) {
-              selectAll(sampleData);
+              selectAll(transTransData);
             } else {
               clearAll();
             }
@@ -104,17 +112,21 @@ const TransTable = () => {
             />
           </span>
         </td>
-        <td className="py-1 px-4">{item.transId}</td>
+        <td className="py-1 px-4">{truncateText(item?._id, 10)}</td>
         <td className="py-1 px-4">{item?.amount}</td>
-        <td className="py-1 px-4">{item?.PAYMENT}</td>
-        <td className="py-1 px-4">{item?.date}</td>
-        <td className="py-1 px-4">{item?.TYPE}</td>
+        <td className="py-1 px-4">expected cash</td>
+        <td className="py-1 px-4">
+          {item.createdAt
+            ? format(parseISO(item.createdAt), "d MMMM, yyyy")
+            : "N/A"}
+        </td>
+        <td className="py-1 px-4">{item?.type}</td>
         <td className="py-1 px-4">
           <span
             className={`${
-              item?.status === "Approved"
+              item?.status === "completed"
                 ? "bg-[#EAFFEF] text-[#079D23]"
-                : item?.status === "Cancelled"
+                : item?.status === "pending"
                 ? "bg-[#FFECEC] text-[#9D0707]"
                 : "text-[#B5983B] bg-[#FFFBEE]"
             }  rounded-[8px] w-fit px-2 py-1`}
@@ -130,7 +142,7 @@ const TransTable = () => {
     <div>
       <TableComponent
         headers={headers}
-        data={sampleData}
+        data={transTransData}
         renderRow={renderRow}
       />
       {selectedRow && (

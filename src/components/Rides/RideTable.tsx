@@ -122,11 +122,11 @@ const RideTable = ({rideTableData}: { rideTableData: RideDataItem[];}) => {
           </span>
         </td>
         <td className="py-1 px-4">{truncateText(item?._id, 10)}</td>
-        <td className="py-1 px-4">{item?.location?.type}</td>
-        <td className="py-1 px-4">{item?.location?.coordinates}</td>
-        <td className="py-1 px-4">{item?.riderType}</td>
-        <td className="py-1 px-4">8</td>
-        <td className="py-1 px-4">wallet</td>
+        <td className="py-1 px-4">{item?.origin?.address}</td>
+        <td className="py-1 px-4">{item?.destination?.address}</td>
+        <td className="py-1 px-4">{item?.type}</td>
+        <td className="py-1 px-4">expected num of passengers</td>
+        <td className="py-1 px-4">expected payment method</td>
       </tr>
     );
   };

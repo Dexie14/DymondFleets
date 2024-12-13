@@ -10,52 +10,46 @@ type ResType = {
 };
 
 export interface RideDataItem {
-  location: Location;
+  origin: Location;
+  destination: Location;
   _id: string;
-  firstName: string;
-  lastName: string;
-  riderStatus: string;
-  gender: string;
-  address: string;
-  profilePicUrl: string;
-  verificationDocumentUrls: string[];
-  vehicleType: string;
-  riderType: string;
-  vehicleModel: string;
-  vehicleRegNo: string;
-  vehicleInsurance: string;
-  vehicleColor: string;
-  vehicleCapacity: number;
-  vehicleYear: number;
-  vehicleMake: string;
-  isBlocked: boolean;
-  isVerified: boolean;
-  isAvailable: string;
-  email: string;
-  password: string;
-  phone: string;
+  userId: string;
+  riderId: string;
+  type: string;
+  status: string;
+  amount: number;
+  distance: number;
+  currency: string;
+  description: string;
+  reference: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
 }
 
 export interface Location {
-  type: string;
-  coordinates: number[];
+  address: string;
+  coordinates: {
+    lat: string;
+    lng: string;
+  };
 }
 
 export const QUERY_KEY_RIDES = "getRides";
 
-const getRides = async (): Promise<ResType> => {
-  const response = await axiosInstance.get(`/admin/riders/paginated`);
+const getRides = async (params: Record<string, any> = {}): Promise<ResType> => {
+  const response = await axiosInstance.get(`/admin/trips/paginated`, {
+    params,
+  });
 
   return response.data;
 };
 
-const useGetRides = () => {
+const useGetRides = (params?: Record<string, any>) => {
   return useQuery<ResType>({
-    queryKey: [QUERY_KEY_RIDES],
-    queryFn: getRides,
+    queryKey: [QUERY_KEY_RIDES, params],
+    // queryFn: getRides,
+    queryFn: () => getRides(params),
     staleTime: 10,
   });
 };

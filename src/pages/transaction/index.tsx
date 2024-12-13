@@ -2,7 +2,7 @@ import CheckBoxFilter from "@/components/General/CheckBoxFilter";
 import Export from "@/components/General/Export";
 import FilterSelect from "@/components/General/FilterSelect";
 import InputFilter from "@/components/General/InputFilter";
-// import Pagination from "@/components/General/Pagination";
+import Pagination from "@/components/General/Pagination";
 import ResetFilter from "@/components/General/ResetFilter";
 import SearchInputComp from "@/components/input/SearchInputComp";
 import TransTable from "@/components/Transactions/TransTable";
@@ -15,9 +15,24 @@ import useGetTrans from "@/hooks/api/queries/transaction/useGetTrans";
 import { useState } from "react";
 
 const Transaction = () => {
-  const { data: TransData } = useGetTrans();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [entriesPerPage] = useState(10);
+
+  const { data: TransData, isPending } = useGetTrans({
+    page: currentPage,
+    limit: entriesPerPage,
+  });
 
   console.log(TransData, "TransData");
+
+  const transTransData = TransData?.data?.items;
+
+  const TransTablePagination = TransData?.data?.pagedInfo;
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
   const [openEmail, setOpenEmail] = useState<boolean>(false);
   const [openPhone, setOpenPhone] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -86,10 +101,20 @@ const Transaction = () => {
           </div>
         </section>
       </section>
-      <section className="my-3">
-        <TransTable />
-        {/* <Pagination /> */}
-      </section>
+      {isPending ? (
+        <div>
+          <p className="text-center">Loading...</p>
+        </div>
+      ) : (
+        <section className="my-3">
+          <TransTable transTransData={transTransData ?? []} />
+          <Pagination
+            TablePagination={TransTablePagination}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </section>
+      )}
     </div>
   );
 };

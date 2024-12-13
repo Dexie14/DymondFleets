@@ -3,7 +3,7 @@ import CheckBoxFilter from "@/components/General/CheckBoxFilter";
 import Export from "@/components/General/Export";
 import FilterSelect from "@/components/General/FilterSelect";
 import InputFilter from "@/components/General/InputFilter";
-// import Pagination from "@/components/General/Pagination";
+import Pagination from "@/components/General/Pagination";
 import ResetFilter from "@/components/General/ResetFilter";
 import SearchInputComp from "@/components/input/SearchInputComp";
 import AssignTable from "@/components/Rides/AssignTable";
@@ -19,11 +19,22 @@ import { useSelectStore } from "@/store/selectStore";
 import { useState } from "react";
 
 const Rides = () => {
-  const { data: rideData } = useGetRides();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [entriesPerPage] = useState(10);
+
+  const { data: rideData, isPending } = useGetRides({
+    page: currentPage,
+    limit: entriesPerPage,
+  });
 
   console.log(rideData?.data?.items, "rideData");
 
   const rideTableData = rideData?.data?.items;
+  const rideTablePagination = rideData?.data?.pagedInfo;
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   const [openRide, setOpenRide] = useState<boolean>(false);
   const [openType, setOpenType] = useState<boolean>(false);
@@ -119,13 +130,22 @@ const Rides = () => {
           </div>
         </section>
       </section>
-      <section className="my-3">
-        <RideTable rideTableData={rideTableData ?? []} />
-        {/* <Pagination /> */}
-      </section>
+      {isPending ? (
+        <div>
+          <p className="text-center">Loading...</p>
+        </div>
+      ) : (
+        <section className="my-3">
+          <RideTable rideTableData={rideTableData ?? []} />
+          <Pagination
+            TablePagination={rideTablePagination}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </section>
+      )}
     </div>
   );
 };
 
 export default Rides;
-

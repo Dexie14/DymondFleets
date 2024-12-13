@@ -4,7 +4,7 @@ import axiosInstance from "@/hooks/axiosInstace";
 type ResType = {
   success: boolean;
   data: {
-    items: any[];
+    items: TransDataItem[];
     pagedInfo: PaginationType;
   };
 };
@@ -16,6 +16,20 @@ export type PaginationType = {
   page: number;
   total: number;
 };
+
+export interface TransDataItem {
+  _id: string;
+  walletId: string;
+  type: string;
+  amount: number;
+  currency: string;
+  status: string;
+  description: string;
+  reference: string;
+  providerReference: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export const QUERY_KEY_TRANS = "getTrans";
 
