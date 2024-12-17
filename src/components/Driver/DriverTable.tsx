@@ -101,7 +101,7 @@ const DriverTable = ({
           {item.firstName} {item?.lastName}
         </td>
         <td className="py-1 px-4">{item?.email}</td>
-        <td className="py-1 px-4">{item?.phone}</td>
+        <td className="py-1 px-4">{item?.mobileNumber}</td>
         <td className="py-1 px-4">
           {" "}
           <span

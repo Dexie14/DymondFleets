@@ -1,13 +1,13 @@
 import {
-  DecreaseIcon,
-  IncreaseIcon,
+  // DecreaseIcon,
+  // IncreaseIcon,
   IncomeIcon,
   CustomerIcon,
   RideIcon,
   RiderIcon,
   CancelIcon,
-  RefundIcon,
-  ComplainIcon,
+  // RefundIcon,
+  // ComplainIcon,
   FeedbackIcon,
 } from "@/assets/svgComp/AdminDashboard";
 
@@ -24,8 +24,8 @@ const InfoCard = ({ infoData }: props) => {
     | "rides"
     | "riders"
     | "cancel"
-    | "refund"
-    | "complain"
+    // | "refund"
+    // | "complain"
     | "feed";
 
   const infoImages: Record<iconInfoType, JSX.Element> = {
@@ -34,13 +34,13 @@ const InfoCard = ({ infoData }: props) => {
     rides: <RideIcon />,
     riders: <RiderIcon />,
     cancel: <CancelIcon />,
-    refund: <RefundIcon />,
-    complain: <ComplainIcon />,
+    // refund: <RefundIcon />,
+    // complain: <ComplainIcon />,
     feed: <FeedbackIcon />,
   };
 
   return (
-    <div className="grid lg:grid-cols-4 w-full items-center gap-x-4 ">
+    <div className="grid lg:grid-cols-3 w-full items-center gap-x-4 ">
       {infoData?.map((item) => {
         return (
           <main
@@ -61,7 +61,7 @@ const InfoCard = ({ infoData }: props) => {
               </div>
             </div>
             <div className="">
-              <p
+              {/* <p
                 className={`text-sm flex items-center gap-2 font-semibold ${
                   item?.percentage.includes("-")
                     ? "text-adminRed"
@@ -74,10 +74,10 @@ const InfoCard = ({ infoData }: props) => {
                   <IncreaseIcon />
                 )}
                 {item?.percentage}
-              </p>
-              <p className="text-sm font-medium text-textShade">
+              </p> */}
+              {/* <p className="text-sm font-medium text-textShade">
                 Up from yesterday
-              </p>
+              </p> */}
             </div>
           </main>
         );

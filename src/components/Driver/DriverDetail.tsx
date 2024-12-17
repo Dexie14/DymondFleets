@@ -68,7 +68,7 @@ const DriverDetail = ({ selectedRow }: { selectedRow: DriverDataItem }) => {
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Phone Number</h5>
         <p className="text-foundationBlue font-medium text-sm">
-          {selectedRow?.phone}
+          {selectedRow?.mobileNumber}
         </p>
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">

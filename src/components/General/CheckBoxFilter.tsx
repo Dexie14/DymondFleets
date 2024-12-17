@@ -1,14 +1,42 @@
 import { CloseIcon } from "@/assets/svgComp/General";
 import { Button } from "../ui/button";
 import { v4 } from "uuid";
+import { useEffect, useState } from "react";
 
 type FilterType = {
   title: string;
   setOpen: (value: boolean) => void;
   listData: string[];
+  onApplyFilters?: (selectedFilters: string[]) => void;
+  resetFilters?: boolean; 
 };
 
-const CheckBoxFilter = ({ title, setOpen, listData }: FilterType) => {
+const CheckBoxFilter = ({ title, setOpen, listData, onApplyFilters,resetFilters  }: FilterType) => {
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+
+  const handleCheckboxChange = (filter: string) => {
+    setSelectedFilters((prev) =>
+      prev.includes(filter)
+        ? prev.filter((item) => item !== filter)
+        : [...prev, filter]
+    );
+  };
+
+  const handleApplyFilters = () => {
+    if (onApplyFilters) {
+      onApplyFilters(selectedFilters); 
+    }
+    setOpen(false); 
+  };
+
+  const handleResetFilters = () => {
+    setSelectedFilters([]); 
+  };
+
+  useEffect(() => {
+    setSelectedFilters([]);
+  }, [resetFilters]);
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -19,7 +47,11 @@ const CheckBoxFilter = ({ title, setOpen, listData }: FilterType) => {
         {listData?.map((item: string) => {
           return (
             <div key={v4()} className="flex items-center gap-4">
-              <input type="checkBox" />
+              <input
+                type="checkBox"
+                checked={selectedFilters.includes(item)}
+                onChange={() => handleCheckboxChange(item)}
+              />
               {item?.includes("Online") ||
               item?.includes("Offline") ||
               item?.includes("In-transit") ||
@@ -57,10 +89,16 @@ const CheckBoxFilter = ({ title, setOpen, listData }: FilterType) => {
       </div>
       <div className="flex justify-end">
         <div className="text-sm flex gap-3 items-center ">
-          <Button className="bg-white border rounded-[8px] px-6 py-2 text-textShade hover:text-white">
+          <Button
+            onClick={handleResetFilters}
+            className="bg-white border rounded-[8px] px-6 py-2 text-textShade hover:text-white"
+          >
             Reset
           </Button>
-          <Button className="bg-blueShade rounded-[8px] px-6 py-2 text-white">
+          <Button
+            onClick={handleApplyFilters}
+            className="bg-blueShade rounded-[8px] px-6 py-2 text-white"
+          >
             Show Results
           </Button>
         </div>

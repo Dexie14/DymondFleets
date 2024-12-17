@@ -41,7 +41,7 @@ export interface DriverDataItem {
   isAvailable: string;
   email: string;
   password: string;
-  phone: string;
+  mobileNumber: string;
   createdAt: string;
   updatedAt: string;
   __v: number;

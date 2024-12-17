@@ -26,7 +26,7 @@ const AdminHeader = () => {
   const formattedTime = format(currentTime, "hh:mm:ss a");
   return (
     <div className="bg-white py-8 px-10 flex items-center justify-between">
-      <h3 className="text-xl font-semibold text-blueShade">
+      <h3 className="text-xl font-semibold text-blueShade capitalize">
         Good morning, {currentUser?.email?.split("@")[0]}!
       </h3>
       <div className="flex gap-5 items-center">

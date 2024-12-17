@@ -16,7 +16,7 @@ const Dashboard = () => {
       percentage: "+2.51%",
     },
     {
-      title: "Customer",
+      title: "User",
       type: "customer",
       count: 97499,
       percentage: "+2.51%",
@@ -39,18 +39,18 @@ const Dashboard = () => {
       count: 370,
       percentage: "+1.2%",
     },
-    {
-      title: "Refunds",
-      type: "refund",
-      count: 5232,
-      percentage: "+1.2%",
-    },
-    {
-      title: "Complaints",
-      type: "complain",
-      count: 5232,
-      percentage: "+1.2%",
-    },
+    // {
+    //   title: "Refunds",
+    //   type: "refund",
+    //   count: 5232,
+    //   percentage: "+1.2%",
+    // },
+    // {
+    //   title: "Complaints",
+    //   type: "complain",
+    //   count: 5232,
+    //   percentage: "+1.2%",
+    // },
     {
       title: "Feedbacks",
       type: "feed",
