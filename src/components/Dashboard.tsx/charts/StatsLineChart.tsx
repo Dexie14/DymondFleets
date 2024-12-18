@@ -66,8 +66,8 @@ import {
 
 type StatsLineChartProps = {
   data: Array<{
-    name: string; 
-    moneyIncome: number; 
+    name: string;
+    moneyIncome: number;
   }>;
 };
 
@@ -103,7 +103,7 @@ export default function StatsLineChart({ data }: StatsLineChartProps) {
           {payload.map((entry: any, index: number) => (
             <p key={index} className="text-xs">
               <span className="">
-                ${new Intl.NumberFormat().format(entry?.value)}
+                ₦{new Intl.NumberFormat().format(entry?.value)}
               </span>
             </p>
           ))}
@@ -125,7 +125,7 @@ export default function StatsLineChart({ data }: StatsLineChartProps) {
           tickFormatter={(value) => getMonthName(value)}
           padding={{ left: 30, right: 30 }}
           interval={0}
-          angle={-5} 
+          angle={-5}
           textAnchor="end"
         />
         <YAxis stroke="none" tick={{ fill: "#A0A0A0", fontSize: "12" }} />
