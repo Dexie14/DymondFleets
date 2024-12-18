@@ -13,6 +13,7 @@ import {
 } from "../ui/dialog";
 import { useState } from "react";
 import useRejectDriver from "@/hooks/api/mutation/drivers/useRejectDriver";
+import { v4 } from "uuid";
 
 const NewDriverDetail = ({
   selectedRow,
@@ -239,10 +240,13 @@ const NewDriverDetail = ({
               Vehicle Documents
             </h5>
             <div className="my-2">
-              <img
-                src={selectedRow?.verificationDocumentUrls[0]}
-                alt="car document"
-              />
+              {selectedRow?.verificationDocumentUrls?.map((item) => {
+                return (
+                  <div key={v4()}>
+                    <img src={item} alt="car document" className="my-2" />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

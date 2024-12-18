@@ -45,7 +45,7 @@ const Registerschema = z
     riderType: z.string().min(1, { message: "Please select a role" }),
     gender: z.string().min(1, { message: "Please select a role" }),
 
-    phone: z
+    mobileNumber: z
       .string()
       .min(10, { message: "Phone number must be at least 10 digits" })
       .max(15, { message: "Phone number must be no more than 15 digits" })
@@ -89,7 +89,7 @@ const Register = () => {
       lastName: data?.lastName,
       gender: data?.gender,
       email: data?.email,
-      phone: data?.phone,
+      mobileNumber: data?.mobileNumber,
       password: data?.password,
       riderType: data?.riderType,
     };
@@ -178,12 +178,12 @@ const Register = () => {
                 Phone Number
                 <Asterisk />
               </p>
-              {errors.phone && (
+              {errors.mobileNumber && (
                 <div className="w-full border border-dashed border-adminRed px-4 py-1  my-7 text-errorBlack text-sm font-semibold">
-                  {errors.phone?.message}
+                  {errors.mobileNumber?.message}
                 </div>
               )}
-              <InputField {...register("phone")} />
+              <InputField {...register("mobileNumber")} />
             </div>
 
             <div className="mb-4">

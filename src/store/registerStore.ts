@@ -7,7 +7,7 @@ interface RegistrationState {
     firstName: string;
     lastName: string;
     gender: string;
-    phone: string;
+    mobileNumber: string;
     password: string;
     riderType: string;
   };
@@ -21,7 +21,7 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
     firstName: "",
     lastName: "",
     gender: "",
-    phone: "",
+    mobileNumber: "",
     password: "",
     riderType: "",
   },
@@ -31,7 +31,7 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
     firstName: "",
     lastName: "",
     gender: "",
-    phone: "",
+    mobileNumber: "",
     password: "",
     riderType: "",
   }}),
