@@ -23,6 +23,7 @@ export interface DriverDataItem {
   firstName: string;
   lastName: string;
   riderStatus: string;
+  approvedByAdmin: boolean;
   gender: string;
   address: string;
   profilePicUrl: string;

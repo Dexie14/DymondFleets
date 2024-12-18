@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDriverSelectStore } from "@/store/genericSelectStore";
 import DriverDetail from "./DriverDetail";
 import { DriverDataItem } from "@/hooks/api/queries/drivers/useDriver";
+import NewDriverDetail from "./NewDriverDetail";
 // import UserDetail from "./UserDetail";
 
 // Sample data type
@@ -168,7 +169,14 @@ const DriverTable = ({
             <DialogTitle className="text-2xl font-medium text-foundationBlue">
               Driver’s Detail
             </DialogTitle>
-            <DriverDetail selectedRow={selectedRow} />
+            {selectedRow?.approvedByAdmin ? (
+              <DriverDetail selectedRow={selectedRow} />
+            ) : (
+              <NewDriverDetail
+                selectedRow={selectedRow}
+                setCloseDialog={() => setSelectedRow(null)}
+              />
+            )}
           </DialogContent>
         </Dialog>
       )}

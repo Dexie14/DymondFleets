@@ -38,6 +38,10 @@ export default {
         adminGreen: "#00B69B",
         adminRed: "#F93C65",
         deepYellow: "#6B5A23",
+        greenBg: "#EAFFEF",
+        textGreen: "#079D23",
+        rebBg: "#FEEDED",
+        textRed: "#F54748",
       },
       boxShadow: {
         custom: "0px 4px 5.8px 0px #00000026",

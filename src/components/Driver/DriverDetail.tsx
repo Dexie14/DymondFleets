@@ -31,7 +31,7 @@ const DriverDetail = ({ selectedRow }: { selectedRow: DriverDataItem }) => {
           >
             <div
               className={`h-3 w-3 ${
-                selectedRow?.riderStatus === "Online"
+                selectedRow?.riderStatus === "Active"
                   ? "bg-[#079D23]"
                   : " bg-[#9D0707]"
               } rounded-full `}
@@ -40,24 +40,24 @@ const DriverDetail = ({ selectedRow }: { selectedRow: DriverDataItem }) => {
           </p>
           <p
             className={`${
-              selectedRow?.riderStatus === "In-transit"
-                ? "bg-[#E6E8F3] text-blueShade"
-                : "text-[#B5983B] bg-[#FFFBEE]"
+              selectedRow?.isAvailable === "Online"
+                ? "bg-[#EAFFEF] text-[#079D23]"
+                : "bg-[#FFECEC] text-[#9D0707]"
             } font-medium text-sm flex items-center justify-center gap-2     rounded-[8px] w-fit px-2 py-1`}
           >
             <div
               className={`h-3 w-3 ${
-                selectedRow?.riderStatus === "In-transit"
-                  ? "bg-blueShade"
-                  : " bg-[#B5983B]"
+                selectedRow?.isAvailable === "Online"
+                  ? "bg-[#079D23]"
+                  : " bg-[#9D0707]"
               } rounded-full `}
             />
-            {selectedRow?.riderStatus} In-transit Expected
+            {selectedRow?.isAvailable}
           </p>
         </div>
       </aside>
       <h3 className="font-bold text-xl text-foundationBlue mb-2 mt-6">
-        User Details
+        Driver’s Details
       </h3>
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">Email</h5>
