@@ -3,10 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/hooks/axiosInstace";
 type ResType = {
   success: boolean;
-  data: {
-    items: any[];
-    pagedInfo: any;
-  };
+  data: any
 };
 
 export const QUERY_KEY_OVERVIEW = "getOverview";

@@ -9,62 +9,87 @@ import {
   AreaChart,
 } from "recharts";
 
-const data = [
-  {
-    name: "1",
-    moneyIncome: 0,
-  },
-  {
-    name: "2",
-    moneyIncome: 270000,
-  },
-  {
-    name: "3",
-    moneyIncome: 120500,
-  },
-  {
-    name: "4",
-    moneyIncome: 700000,
-  },
-  {
-    name: "5",
-    moneyIncome: 330000,
-  },
-  {
-    name: "6",
-    moneyIncome: 400000,
-  },
-  {
-    name: "7",
-    moneyIncome: 600000,
-  },
-  {
-    name: "8",
-    moneyIncome: 9000,
-  },
-  {
-    name: "9",
-    moneyIncome: 200000,
-  },
-  {
-    name: "10",
-    moneyIncome: 290000,
-  },
-  {
-    name: "11",
-    moneyIncome: 400000,
-  },
-  {
-    name: "12",
-    moneyIncome: 255000,
-  },
-  {
-    name: "13",
-    moneyIncome: 300000,
-  },
-];
+// const data = [
+//   {
+//     name: "1",
+//     moneyIncome: 0,
+//   },
+//   {
+//     name: "2",
+//     moneyIncome: 270000,
+//   },
+//   {
+//     name: "3",
+//     moneyIncome: 120500,
+//   },
+//   {
+//     name: "4",
+//     moneyIncome: 700000,
+//   },
+//   {
+//     name: "5",
+//     moneyIncome: 330000,
+//   },
+//   {
+//     name: "6",
+//     moneyIncome: 400000,
+//   },
+//   {
+//     name: "7",
+//     moneyIncome: 600000,
+//   },
+//   {
+//     name: "8",
+//     moneyIncome: 9000,
+//   },
+//   {
+//     name: "9",
+//     moneyIncome: 200000,
+//   },
+//   {
+//     name: "10",
+//     moneyIncome: 290000,
+//   },
+//   {
+//     name: "11",
+//     moneyIncome: 400000,
+//   },
+//   {
+//     name: "12",
+//     moneyIncome: 255000,
+//   },
+//   {
+//     name: "13",
+//     moneyIncome: 300000,
+//   },
+// ];
 
-export default function StatsLineChart() {
+type StatsLineChartProps = {
+  data: Array<{
+    name: string; 
+    moneyIncome: number; 
+  }>;
+};
+
+export default function StatsLineChart({ data }: StatsLineChartProps) {
+  const getMonthName = (month: number): string => {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    return months[month - 1];
+  };
+
   type CustomTooltipProps = {
     active?: boolean;
     payload?: any;
@@ -97,7 +122,11 @@ export default function StatsLineChart() {
           tick={{ fill: "#A0A0A0", fontSize: "12" }}
           stroke="none"
           dataKey="name"
+          tickFormatter={(value) => getMonthName(value)}
           padding={{ left: 30, right: 30 }}
+          interval={0}
+          angle={-5} 
+          textAnchor="end"
         />
         <YAxis stroke="none" tick={{ fill: "#A0A0A0", fontSize: "12" }} />
         <Tooltip content={<CustomTooltip />} />
