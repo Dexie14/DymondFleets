@@ -184,7 +184,7 @@ const Rides = () => {
         <div>
           <p className="text-center">Loading...</p>
         </div>
-      ) : (
+      ) : rideTableData && rideTableData?.length > 0 ? (
         <section className="my-3">
           <RideTable rideTableData={rideTableData ?? []} />
           <Pagination
@@ -193,6 +193,8 @@ const Rides = () => {
             onPageChange={handlePageChange}
           />
         </section>
+      ) : (
+        <p className="text-center">no data available</p>
       )}
     </div>
   );

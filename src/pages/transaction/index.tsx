@@ -20,9 +20,9 @@ const Transaction = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage] = useState(10);
   const [filterStatus, setFilterStatus] = useState<string[]>([]);
+  const [filterTypeStatus, setFilterTypeStatus] = useState<string[]>([]);
   const [inputFilters, setInputFilters] = useState<{ [key: string]: string }>({
     Reference: "",
-    Type: "",
   });
 
   const { data: TransData, isPending } = useGetTrans({
@@ -31,7 +31,7 @@ const Transaction = () => {
     status: filterStatus.join(","),
     search: searchQuery,
     reference: inputFilters.Reference,
-    type: inputFilters.Type,
+    type: filterTypeStatus.join(","),
   });
 
   const transTransData = TransData?.data?.items;
@@ -51,6 +51,9 @@ const Transaction = () => {
   const handleApplyFilters = (selectedFilters: string[]) => {
     setFilterStatus(selectedFilters);
   };
+  const handleApplyTypeFilters = (selectedFilters: string[]) => {
+    setFilterTypeStatus(selectedFilters);
+  };
   const handleInputFilterChange = (name: string, value: string) => {
     setInputFilters((prev) => ({ ...prev, [name]: value }));
   };
@@ -59,12 +62,14 @@ const Transaction = () => {
 
   const isFilterActive =
     filterStatus.length > 0 ||
+    filterTypeStatus.length > 0 ||
     Object.values(inputFilters).some((value) => value.trim() !== "");
 
   const handleGlobalReset = () => {
     setFilterStatus([]);
+    setFilterTypeStatus([]);
     setResetFilters((prev) => !prev);
-    setInputFilters({ Reference: "", Type: "" });
+    setInputFilters({ Reference: "" });
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,6 +106,7 @@ const Transaction = () => {
               />
             </PopoverContent>
           </Popover>
+
           <Popover open={openType} onOpenChange={setOpenType}>
             <PopoverTrigger>
               <FilterSelect title="Transaction Type" />
@@ -109,14 +115,11 @@ const Transaction = () => {
               align="start"
               className="py-6 px-6 rounded-[12px] w-[350px]"
             >
-              <InputFilter
+              <CheckBoxFilter
+                listData={["debit", "credit", "fund_wallet"]}
                 setOpen={setOpenType}
                 title="Filter by Type"
-                placeholder="Enter Type"
-                nameTag="Type"
-                onApplyFilters={(value) =>
-                  handleInputFilterChange("Type", value)
-                }
+                onApplyFilters={handleApplyTypeFilters}
                 resetFilters={resetFilters}
               />
             </PopoverContent>

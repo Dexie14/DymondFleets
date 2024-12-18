@@ -163,7 +163,7 @@ const Users = () => {
         <div>
           <p className="text-center">Loading...</p>
         </div>
-      ) : (
+      ) : userTableData && userTableData?.length > 0 ? (
         <section className="my-3">
           <UserTable userTableData={userTableData ?? []} />
           <Pagination
@@ -172,6 +172,8 @@ const Users = () => {
             onPageChange={handlePageChange}
           />
         </section>
+      ) : (
+        <p className="text-center">no data available</p>
       )}
     </div>
   );
