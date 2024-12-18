@@ -77,7 +77,7 @@ const TransTable = ({ transTransData }: TransTableProps) => {
         />
       ),
     },
-    { content: <>TRANSACTION ID</> },
+    { content: <>REFERENCE ID</> },
     { content: <>AMOUNT PAID (NGN)</> },
     { content: <>PAYMENT METHOD</> },
     { content: <>DATE CREATED</> },
@@ -112,7 +112,7 @@ const TransTable = ({ transTransData }: TransTableProps) => {
             />
           </span>
         </td>
-        <td className="py-1 px-4">{truncateText(item?._id, 10)}</td>
+        <td className="py-1 px-4">{truncateText(item?.reference, 10)}</td>
         <td className="py-1 px-4">{item?.amount}</td>
         <td className="py-1 px-4">expected cash</td>
         <td className="py-1 px-4">

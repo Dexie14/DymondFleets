@@ -61,7 +61,7 @@ import { truncateText } from "@/lib/fns";
 //   rideTableData: RideDataItem[];
 // };
 
-const RideTable = ({rideTableData}: { rideTableData: RideDataItem[];}) => {
+const RideTable = ({ rideTableData }: { rideTableData: RideDataItem[] }) => {
   const { selectedItems, addItem, removeItem, selectAll, clearAll } =
     useSelectStore();
 
@@ -90,7 +90,7 @@ const RideTable = ({rideTableData}: { rideTableData: RideDataItem[];}) => {
     { content: <>PICKUP LOCATION</> },
     { content: <>DROP OFF LOCATION</> },
     { content: <>RIDE TYPE</> },
-    { content: <> NO OF PASSENGERS</> },
+    { content: <> STATUS</> },
     { content: <> PAYMENT METHOD</> },
   ];
 
@@ -125,8 +125,20 @@ const RideTable = ({rideTableData}: { rideTableData: RideDataItem[];}) => {
         <td className="py-1 px-4">{item?.origin?.address}</td>
         <td className="py-1 px-4">{item?.destination?.address}</td>
         <td className="py-1 px-4">{item?.type}</td>
-        <td className="py-1 px-4">expected num of passengers</td>
-        <td className="py-1 px-4">expected payment method</td>
+        <td className="py-1 px-4">
+          <span
+            className={`${
+              item?.status === "completed"
+                ? "bg-[#EAFFEF] text-[#079D23]"
+                : item?.status === "cancelled"
+                ? "bg-[#FFECEC] text-[#9D0707]"
+                : "text-[#B5983B] bg-[#FFFBEE]"
+            }  rounded-[8px] w-fit px-2 py-1`}
+          >
+            {item?.status}
+          </span>
+        </td>
+        <td className="py-1 px-4">{item?.paymentMethod}</td>
       </tr>
     );
   };

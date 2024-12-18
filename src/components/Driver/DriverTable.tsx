@@ -66,7 +66,7 @@ const DriverTable = ({
     { content: <>NAME</> },
     { content: <>EMAIL</> },
     { content: <>PHONE NUMBER</> },
-    { content: <>ORDER ASSIGN STATUS</> },
+    { content: <>AVAILABILITY STATUS</> },
     { content: <> STATUS</> },
   ];
 
@@ -106,19 +106,19 @@ const DriverTable = ({
           {" "}
           <span
             className={`${
-              item?.riderStatus === "In-transit"
-                ? "bg-[#E6E8F3] text-blueShade"
-                : "text-[#B5983B] bg-[#FFFBEE]"
+              item?.isAvailable === "Online"
+                ? "bg-[#EAFFEF] text-[#079D23]"
+                : "bg-[#FFECEC] text-[#9D0707]"
             }  flex items-center justify-center gap-2 rounded-[8px] w-fit px-2 py-1`}
           >
             <div
               className={`h-3 w-3 ${
-                item?.riderStatus === "In-transit"
-                  ? "bg-blueShade"
-                  : " bg-[#B5983B]"
+                item?.isAvailable === "Online"
+                  ? "bg-[#079D23]"
+                  : " bg-[#9D0707]"
               } rounded-full `}
             />
-            {item?.riderStatus} In-transit Expected
+            {item?.isAvailable}
           </span>
         </td>
         <td className="py-1 px-4">
@@ -133,7 +133,9 @@ const DriverTable = ({
           >
             <div
               className={`h-3 w-3 ${
-                item?.riderStatus === "Active" ? "bg-[#079D23]" : " bg-[#9D0707]"
+                item?.riderStatus === "Active"
+                  ? "bg-[#079D23]"
+                  : " bg-[#9D0707]"
               } rounded-full `}
             />
             {item?.riderStatus}

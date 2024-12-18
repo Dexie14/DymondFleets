@@ -13,6 +13,14 @@ const TransDetail = ({ selectedRow }: { selectedRow: TransDataItem }) => {
       </div>
       <div className="flex justify-between items-center py-3 border-b border-border">
         <h5 className="text-mediumGrey text-sm font-semibold">
+          Reference ID
+        </h5>
+        <p className="text-foundationBlue font-medium text-sm">
+          {selectedRow?.reference}
+        </p>
+      </div>
+      <div className="flex justify-between items-center py-3 border-b border-border">
+        <h5 className="text-mediumGrey text-sm font-semibold">
           Amount Paid (NGN)
         </h5>
         <p className="text-foundationBlue font-medium text-sm">

@@ -21,10 +21,20 @@ import { useState } from "react";
 const Rides = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage] = useState(10);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState<string[]>([]);
+  const [filterPayment, setFilterPayment] = useState<string[]>([]);
+  const [inputFilters, setInputFilters] = useState<{ [key: string]: string }>({
+    rideId: "",
+  });
 
   const { data: rideData, isPending } = useGetRides({
     page: currentPage,
     limit: entriesPerPage,
+    search: searchQuery,
+    type: filterStatus.join(","),
+    paymentMethod: filterPayment.join(","),
+    _id: inputFilters.rideId,
   });
 
   console.log(rideData?.data?.items, "rideData");
@@ -35,6 +45,15 @@ const Rides = () => {
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
+  const handleInputFilterChange = (name: string, value: string) => {
+    setInputFilters((prev) => ({ ...prev, [name]: value }));
+  };
+  const handleApplyFilters = (selectedFilters: string[]) => {
+    setFilterStatus(selectedFilters);
+  };
+  const handleApplyFiltersPayment = (selectedFilters: string[]) => {
+    setFilterPayment(selectedFilters);
+  };
 
   const [openRide, setOpenRide] = useState<boolean>(false);
   const [openType, setOpenType] = useState<boolean>(false);
@@ -44,11 +63,29 @@ const Rides = () => {
   const { selectedItems } = useSelectStore();
 
   const selectedState = selectedItems?.length === 1;
+
+  const [resetFilters, setResetFilters] = useState(false);
+
+  const isFilterActive =
+    filterStatus.length > 0 ||
+    filterPayment.length > 0 ||
+    Object.values(inputFilters).some((value) => value.trim() !== "");
+
+  const handleGlobalReset = () => {
+    setFilterStatus([]);
+    setFilterPayment([]);
+    setResetFilters((prev) => !prev);
+    setInputFilters({ Email: "", PhoneNumber: "" });
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
   return (
     <div>
       <aside className="flex items-center justify-between">
         <h3 className="text-mediumBlue font-medium text-2xl">Rides</h3>
-        <Export />
+        <Export allData={rideTableData} selectedItems={selectedItems}/>
       </aside>
       <section className="bg-white rounded-[8px] px-3 py-2 my-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -65,6 +102,10 @@ const Rides = () => {
                 title="Filter by Ride ID"
                 placeholder="Enter Ride ID"
                 nameTag="rideId"
+                onApplyFilters={(value) =>
+                  handleInputFilterChange("rideId", value)
+                }
+                resetFilters={resetFilters}
               />
             </PopoverContent>
           </Popover>
@@ -77,8 +118,10 @@ const Rides = () => {
               className="py-6 px-6 rounded-[12px] w-[350px]"
             >
               <CheckBoxFilter
-                listData={["Car", "Bike", "Bus", "Truck"]}
+                listData={["one_way", "shared"]}
                 setOpen={setOpenType}
+                onApplyFilters={handleApplyFilters}
+                resetFilters={resetFilters}
                 title=" Filter by Ride Type"
               />
             </PopoverContent>
@@ -92,18 +135,23 @@ const Rides = () => {
               className="py-6 px-6 rounded-[12px] w-[350px]"
             >
               <CheckBoxFilter
-                listData={["Cash", "Card", "Wallet"]}
+                listData={["cash", "card", "wallet"]}
                 setOpen={setOpenPay}
+                onApplyFilters={handleApplyFiltersPayment}
+                resetFilters={resetFilters}
                 title=" Filter by Payment Method"
               />
             </PopoverContent>
           </Popover>
 
-          <ResetFilter />
+          <ResetFilter onClick={handleGlobalReset} isActive={isFilterActive} />
         </div>
         <section className="flex items-center gap-4">
           <div>
-            <SearchInputComp className="!w-[220px]" />
+            <SearchInputComp
+              onChange={handleSearchChange}
+              className="!w-[220px]"
+            />
           </div>
           <div>
             <Assign

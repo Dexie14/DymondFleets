@@ -103,14 +103,14 @@ const UserTable = ({ userTableData }: UserTableProps) => {
         <td className="py-1 px-4">
           <span
             className={`${
-              item?.userRegistrationCompleted === true
+              item?.isVerified === true
                 ? "bg-[#EAFFEF] text-[#079D23]"
-                : item?.userRegistrationCompleted === false
+                : item?.isVerified === false
                 ? "bg-[#FFECEC] text-[#9D0707]"
                 : "text-[#B5983B] bg-[#FFFBEE]"
             }  rounded-[8px] w-fit px-2 py-1`}
           >
-            {item?.userRegistrationCompleted ? "True": "False"}
+            {item?.isVerified ? "True": "False"}
           </span>
         </td>
       </tr>

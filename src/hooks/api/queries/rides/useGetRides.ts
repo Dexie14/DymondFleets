@@ -15,6 +15,7 @@ export interface RideDataItem {
   _id: string;
   userId: string;
   riderId: string;
+  paymentMethod: string;
   type: string;
   status: string;
   amount: number;

@@ -11,72 +11,61 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import useGetTrans, {
-  TransDataItem,
-} from "@/hooks/api/queries/transaction/useGetTrans";
-import { useEffect, useState } from "react";
+import useGetTrans from "@/hooks/api/queries/transaction/useGetTrans";
+import { useTransSelectStore } from "@/store/genericSelectStore";
+import { useState } from "react";
 
 const Transaction = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState<TransDataItem[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage] = useState(10);
   const [filterStatus, setFilterStatus] = useState<string[]>([]);
+  const [inputFilters, setInputFilters] = useState<{ [key: string]: string }>({
+    Reference: "",
+    Type: "",
+  });
 
   const { data: TransData, isPending } = useGetTrans({
     page: currentPage,
     limit: entriesPerPage,
-    status: filterStatus,
+    status: filterStatus.join(","),
+    search: searchQuery,
+    reference: inputFilters.Reference,
+    type: inputFilters.Type,
   });
-
-  console.log(TransData, "TransData");
 
   const transTransData = TransData?.data?.items;
 
   const TransTablePagination = TransData?.data?.pagedInfo;
 
+  const { selectedItems } = useTransSelectStore();
+
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
 
-  const [openEmail, setOpenEmail] = useState<boolean>(false);
-  const [openPhone, setOpenPhone] = useState<boolean>(false);
+  const [openReference, setOpenReference] = useState<boolean>(false);
+  const [openType, setOpenType] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
 
   const handleApplyFilters = (selectedFilters: string[]) => {
     setFilterStatus(selectedFilters);
   };
+  const handleInputFilterChange = (name: string, value: string) => {
+    setInputFilters((prev) => ({ ...prev, [name]: value }));
+  };
 
   const [resetFilters, setResetFilters] = useState(false);
 
-  const isFilterActive = filterStatus?.length > 0;
+  const isFilterActive =
+    filterStatus.length > 0 ||
+    Object.values(inputFilters).some((value) => value.trim() !== "");
 
   const handleGlobalReset = () => {
     setFilterStatus([]);
     setResetFilters((prev) => !prev);
+    setInputFilters({ Reference: "", Type: "" });
   };
-
-  useEffect(() => {
-    if (transTransData) {
-      // Filter by any keyword in the transaction data
-      const filtered = transTransData.filter((item) => {
-        return Object.values(item).some((val) =>
-          String(val).toLowerCase().includes(searchQuery.toLowerCase())
-        );
-      });
-      setFilteredData(filtered);
-    }
-  }, [searchQuery, transTransData]);
-
-  // useEffect(() => {
-  //   // Filter data on searchQuery change
-  //   if (transData?.data?.items) {
-  //     const filtered = transData.data.items.filter((item) =>
-  //       item.name.toLowerCase().includes(searchQuery.toLowerCase()) // Modify this according to your filter logic
-  //     );
-  //     setFilteredData(filtered);
-  //   }
-  // }, [searchQuery, transData]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -86,39 +75,47 @@ const Transaction = () => {
     <div>
       <aside className="flex items-center justify-between">
         <h3 className="text-mediumBlue font-medium text-2xl">Transactions</h3>
-        <Export />
+        <Export allData={transTransData} selectedItems={selectedItems}/>
       </aside>
       <section className="bg-white rounded-[8px] px-3 py-2 my-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Popover open={openEmail} onOpenChange={setOpenEmail}>
+          <Popover open={openReference} onOpenChange={setOpenReference}>
             <PopoverTrigger>
-              <FilterSelect title=" Email" />
+              <FilterSelect title=" Reference" />
             </PopoverTrigger>
             <PopoverContent
               align="start"
               className="py-6 px-6 rounded-[12px] w-[350px]"
             >
               <InputFilter
-                setOpen={setOpenEmail}
-                title="Filter by Email"
-                placeholder="Enter Email"
-                nameTag="Email"
+                setOpen={setOpenReference}
+                title="Filter by Reference"
+                placeholder="Enter Reference"
+                nameTag="Reference"
+                onApplyFilters={(value) =>
+                  handleInputFilterChange("Reference", value)
+                }
+                resetFilters={resetFilters}
               />
             </PopoverContent>
           </Popover>
-          <Popover open={openPhone} onOpenChange={setOpenPhone}>
+          <Popover open={openType} onOpenChange={setOpenType}>
             <PopoverTrigger>
-              <FilterSelect title="Phone Number" />
+              <FilterSelect title="Transaction Type" />
             </PopoverTrigger>
             <PopoverContent
               align="start"
               className="py-6 px-6 rounded-[12px] w-[350px]"
             >
               <InputFilter
-                setOpen={setOpenPhone}
-                title="Filter by Phone Number"
-                placeholder="Enter Phone Number"
-                nameTag="PhoneNumber"
+                setOpen={setOpenType}
+                title="Filter by Type"
+                placeholder="Enter Type"
+                nameTag="Type"
+                onApplyFilters={(value) =>
+                  handleInputFilterChange("Type", value)
+                }
+                resetFilters={resetFilters}
               />
             </PopoverContent>
           </Popover>
@@ -155,15 +152,17 @@ const Transaction = () => {
         <div>
           <p className="text-center">Loading...</p>
         </div>
-      ) : (
+      ) : transTransData && transTransData?.length > 0 ? (
         <section className="my-3">
-          <TransTable transTransData={filteredData ?? []} />
+          <TransTable transTransData={transTransData ?? []} />
           <Pagination
             TablePagination={TransTablePagination}
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
         </section>
+      ) : (
+        <p className="text-center">no data available</p>
       )}
     </div>
   );

@@ -18,33 +18,43 @@ import * as z from "zod";
 import PasswordInput from "@/components/input/PasswordInput";
 import { useRegistrationStore } from "@/store/registerStore";
 
-const Registerschema = z.object({
-  email: z
-    .string()
-    .email({
-      message: "Please enter a correct email",
-    })
-    .refine((s) => !s.includes(" "), "No spaces allowed"),
-  firstName: z
-    .string()
-    .min(1, { message: "First name must be filled" })
-    .refine((s) => !s.includes(" "), { message: "No spaces allowed" }),
-  lastName: z
-    .string()
-    .min(1, { message: "Last name must be filled" })
-    .refine((s) => !s.includes(" "), { message: "No spaces allowed" }),
-  password: z
-    .string()
-    .min(8, { message: "password must contain at least 8 characters" }),
-  riderType: z.string().min(1, { message: "Please select a role" }),
-  gender: z.string().min(1, { message: "Please select a role" }),
+const Registerschema = z
+  .object({
+    email: z
+      .string()
+      .email({
+        message: "Please enter a correct email",
+      })
+      .refine((s) => !s.includes(" "), "No spaces allowed"),
+    firstName: z
+      .string()
+      .min(1, { message: "First name must be filled" })
+      .refine((s) => !s.includes(" "), { message: "No spaces allowed" }),
+    lastName: z
+      .string()
+      .min(1, { message: "Last name must be filled" })
+      .refine((s) => !s.includes(" "), { message: "No spaces allowed" }),
+    password: z
+      .string()
+      .min(8, { message: "password must contain at least 8 characters" }),
+    confirmPassword: z
+      .string()
+      .min(8, {
+        message: "Confirm Password must contain at least 8 characters",
+      }),
+    riderType: z.string().min(1, { message: "Please select a role" }),
+    gender: z.string().min(1, { message: "Please select a role" }),
 
-  phone: z
-    .string()
-    .min(10, { message: "Phone number must be at least 10 digits" })
-    .max(15, { message: "Phone number must be no more than 15 digits" })
-    .regex(/^\d{10,15}$/, { message: "Enter a valid phone number" }),
-});
+    phone: z
+      .string()
+      .min(10, { message: "Phone number must be at least 10 digits" })
+      .max(15, { message: "Phone number must be no more than 15 digits" })
+      .regex(/^\d{10,15}$/, { message: "Enter a valid phone number" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords must match",
+    path: ["confirmPassword"],
+  });
 
 type FormData = z.infer<typeof Registerschema>;
 
@@ -195,7 +205,7 @@ const Register = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div>
+            <div className="mb-4">
               <p className="flex gap-2 items-center font-semibold">
                 Password
                 <Asterisk />
@@ -209,6 +219,22 @@ const Register = () => {
                 {...register("password")}
                 name="password"
                 placeholder="Enter your password"
+              />
+            </div>
+            <div>
+              <p className="flex gap-2 items-center font-semibold">
+                Confirm Password
+                <Asterisk />
+              </p>
+              {errors.confirmPassword && (
+                <div className="w-full border border-dashed border-adminRed px-4 py-1  my-7 text-errorBlack text-sm font-semibold">
+                  {errors.confirmPassword?.message}
+                </div>
+              )}
+              <PasswordInput
+                {...register("confirmPassword")}
+                name="confirmPassword"
+                placeholder="Confirm your password"
               />
             </div>
             <Button

@@ -21,14 +21,24 @@ import RideAssignTable from "@/components/Driver/RideAssignTable";
 import useGetDriver from "@/hooks/api/queries/drivers/useDriver";
 
 const Driver = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage] = useState(10);
+  const [filterStatus, setFilterStatus] = useState<string[]>([]);
+  const [inputFilters, setInputFilters] = useState<{ [key: string]: string }>({
+    Email: "",
+    PhoneNumber: "",
+  });
 
   const { data: DriverData, isPending } = useGetDriver({
     page: currentPage,
     limit: entriesPerPage,
+    isAvailable: filterStatus.join(","),
+    search: searchQuery,
+    email: inputFilters.Email,
+    mobileNumber: inputFilters.PhoneNumber,
   });
-  console.log(DriverData?.data?.items, "rideData");
+  // console.log(DriverData?.data?.items, "rideData");
 
   const DriverTableData = DriverData?.data?.items;
   const DriverTablePagination = DriverData?.data?.pagedInfo;
@@ -37,9 +47,16 @@ const Driver = () => {
     setCurrentPage(newPage);
   };
 
+  const handleApplyFilters = (selectedFilters: string[]) => {
+    setFilterStatus(selectedFilters);
+  };
+  const handleInputFilterChange = (name: string, value: string) => {
+    setInputFilters((prev) => ({ ...prev, [name]: value }));
+  };
+
   const [openPhone, setOpenPhone] = useState<boolean>(false);
+  const [openEmail, setOpenEmail] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
-  const [openOrderStatus, setOpenOrderStatus] = useState<boolean>(false);
 
   const [openAssign, setOpenAssign] = useState<boolean>(false);
 
@@ -47,14 +64,50 @@ const Driver = () => {
 
   const selectedState = selectedItems?.length === 1;
 
+  const [resetFilters, setResetFilters] = useState(false);
+
+  const isFilterActive =
+    filterStatus.length > 0 ||
+    Object.values(inputFilters).some((value) => value.trim() !== "");
+
+  const handleGlobalReset = () => {
+    setFilterStatus([]);
+    setResetFilters((prev) => !prev);
+    setInputFilters({ Email: "", PhoneNumber: "" });
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
   return (
     <div>
       <aside className="flex items-center justify-between">
         <h3 className="text-mediumBlue font-medium text-2xl">Drivers</h3>
-        <Export selectedItems={selectedItems} />
+        <Export  allData={DriverTableData} selectedItems={selectedItems} />
       </aside>
       <section className="bg-white rounded-[8px] px-3 py-2 my-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
+          <Popover open={openEmail} onOpenChange={setOpenEmail}>
+            <PopoverTrigger>
+              <FilterSelect title="Email" />
+            </PopoverTrigger>
+            <PopoverContent
+              align="start"
+              className="py-6 px-6 rounded-[12px] w-[350px]"
+            >
+              <InputFilter
+                setOpen={setOpenEmail}
+                title="Filter by Email "
+                placeholder="Enter Email Address"
+                nameTag="Email"
+                onApplyFilters={(value) =>
+                  handleInputFilterChange("Email", value)
+                }
+                resetFilters={resetFilters}
+              />
+            </PopoverContent>
+          </Popover>
           <Popover open={openPhone} onOpenChange={setOpenPhone}>
             <PopoverTrigger>
               <FilterSelect title="Phone Number" />
@@ -68,12 +121,16 @@ const Driver = () => {
                 title="Filter by Phone Number"
                 placeholder="Enter Phone Number"
                 nameTag="PhoneNumber"
+                onApplyFilters={(value) =>
+                  handleInputFilterChange("PhoneNumber", value)
+                }
+                resetFilters={resetFilters}
               />
             </PopoverContent>
           </Popover>
           <Popover open={openStatus} onOpenChange={setOpenStatus}>
             <PopoverTrigger>
-              <FilterSelect title=" Status" />
+              <FilterSelect title=" Availability Status" />
             </PopoverTrigger>
             <PopoverContent
               align="start"
@@ -82,31 +139,21 @@ const Driver = () => {
               <CheckBoxFilter
                 listData={["Online", "Offline"]}
                 setOpen={setOpenStatus}
+                onApplyFilters={handleApplyFilters}
+                resetFilters={resetFilters}
                 title=" Filter Status"
               />
             </PopoverContent>
           </Popover>
-          <Popover open={openOrderStatus} onOpenChange={setOpenOrderStatus}>
-            <PopoverTrigger>
-              <FilterSelect title=" Order Assign Status" />
-            </PopoverTrigger>
-            <PopoverContent
-              align="start"
-              className="py-6 px-6 rounded-[12px] w-[350px]"
-            >
-              <CheckBoxFilter
-                listData={["In-transit", "No assigned Order"]}
-                setOpen={setOpenOrderStatus}
-                title=" Filter by Order Assign Status"
-              />
-            </PopoverContent>
-          </Popover>
 
-          <ResetFilter />
+          <ResetFilter onClick={handleGlobalReset} isActive={isFilterActive} />
         </div>
         <section className="flex items-center gap-4">
           <div>
-            <SearchInputComp className="!w-[220px]" />
+            <SearchInputComp
+              onChange={handleSearchChange}
+              className="!w-[220px]"
+            />
           </div>
           <div>
             <Assign

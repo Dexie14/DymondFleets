@@ -27,7 +27,11 @@ const Export = <T extends object>({
     <div>
       <Dialog>
         <DialogTrigger>
-          <Button className="bg-deepYellow rounded-[4px] w-[100px] h-[40px] text-sm font-medium text-foundationWhite">
+          <Button
+            className={` ${
+              ExportAll || ExportSelected ? "bg-blueShade" : "bg-deepYellow"
+            } rounded-[4px] w-[100px] h-[40px] text-sm font-medium text-foundationWhite`}
+          >
             <div className="mr-1">
               <ExportIcon />
             </div>
@@ -40,7 +44,7 @@ const Export = <T extends object>({
           </DialogTitle>
           <section className="w-full flex flex-col space-y-5">
             {selectedItems && selectedItems?.length > 0 ? (
-              <CSVLink data={selectedItems ?? []}>
+              <CSVLink data={selectedItems ?? []} filename={"ExportedSelectedData"}>
                 <Button
                   disabled={!ExportSelected}
                   className={`${

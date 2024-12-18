@@ -19,12 +19,22 @@ import { useUsersSelectStore } from "@/store/genericSelectStore";
 import { useState } from "react";
 
 const Users = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage] = useState(10);
+  const [filterStatus, setFilterStatus] = useState<string[]>([]);
+  const [inputFilters, setInputFilters] = useState<{ [key: string]: string }>({
+    Email: "",
+    PhoneNumber: "",
+  });
 
   const { data: usersData, isPending } = useGetUsers({
     page: currentPage,
     limit: entriesPerPage,
+    search: searchQuery,
+    isVerified: filterStatus.join(","),
+    email: inputFilters.Email,
+    phoneNumber: inputFilters.PhoneNumber,
   });
   console.log(usersData, "usersData");
 
@@ -35,15 +45,34 @@ const Users = () => {
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
+  const handleInputFilterChange = (name: string, value: string) => {
+    setInputFilters((prev) => ({ ...prev, [name]: value }));
+  };
+  const handleApplyFilters = (selectedFilters: string[]) => {
+    setFilterStatus(selectedFilters);
+  };
 
   const [openEmail, setOpenEmail] = useState<boolean>(false);
   const [openPhone, setOpenPhone] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
 
+  const { selectedItems } = useUsersSelectStore();
 
-    const { selectedItems } = useUsersSelectStore();
-  
+  const [resetFilters, setResetFilters] = useState(false);
 
+  const isFilterActive =
+    filterStatus.length > 0 ||
+    Object.values(inputFilters).some((value) => value.trim() !== "");
+
+  const handleGlobalReset = () => {
+    setFilterStatus([]);
+    setResetFilters((prev) => !prev);
+    setInputFilters({ Email: "", PhoneNumber: "" });
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   return (
     <div>
@@ -72,6 +101,10 @@ const Users = () => {
                 title="Filter by Email"
                 placeholder="Enter Email"
                 nameTag="Email"
+                onApplyFilters={(value) =>
+                  handleInputFilterChange("Email", value)
+                }
+                resetFilters={resetFilters}
               />
             </PopoverContent>
           </Popover>
@@ -88,6 +121,10 @@ const Users = () => {
                 title="Filter by Phone Number"
                 placeholder="Enter Phone Number"
                 nameTag="PhoneNumber"
+                onApplyFilters={(value) =>
+                  handleInputFilterChange("PhoneNumber", value)
+                }
+                resetFilters={resetFilters}
               />
             </PopoverContent>
           </Popover>
@@ -100,18 +137,23 @@ const Users = () => {
               className="py-6 px-6 rounded-[12px] w-[350px]"
             >
               <CheckBoxFilter
-                listData={["Online", "Offline"]}
+                listData={["True", "False"]}
                 setOpen={setOpenStatus}
+                onApplyFilters={handleApplyFilters}
+                resetFilters={resetFilters}
                 title=" Filter Status"
               />
             </PopoverContent>
           </Popover>
 
-          <ResetFilter />
+          <ResetFilter onClick={handleGlobalReset} isActive={isFilterActive} />
         </div>
         <section className="flex items-center gap-4">
           <div>
-            <SearchInputComp className="!w-[220px]" />
+            <SearchInputComp
+              onChange={handleSearchChange}
+              className="!w-[220px]"
+            />
           </div>
         </section>
       </section>
