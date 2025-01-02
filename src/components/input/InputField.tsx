@@ -10,6 +10,7 @@ interface InputProps {
   className?: string;
   inputClassname?: string;
   error?: string;
+  readOnly?: boolean;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   ref?: React.Ref<HTMLInputElement>;
 }
@@ -26,6 +27,7 @@ const InputField = forwardRef<HTMLInputElement, InputProps>(
       error,
       onBlur,
       value,
+      readOnly,
       onChange,
       ...rest
     },
@@ -46,6 +48,7 @@ const InputField = forwardRef<HTMLInputElement, InputProps>(
           value={value}
           onChange={onChange}
           placeholder={placeholder}
+          readOnly={readOnly}
           ref={ref}
           {...rest}
           className={`mt-1 w-full h-[50px] ${inputClassname} bg-selectColor placeholder:text-placeholderColor  p-4 rounded-[8px] shadow-sm focus:outline-none focus:border-black text-sm ${

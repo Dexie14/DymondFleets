@@ -9,6 +9,7 @@ interface InputProps {
   placeholder?: string;
   className?: string;
   passswordClassname?: string;
+  readOnly?: boolean;
   error?: string;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   ref?: React.Ref<HTMLInputElement>;
@@ -26,6 +27,7 @@ const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
       onBlur,
       value,
       onChange,
+      readOnly,
       ...rest
     },
     ref
@@ -54,6 +56,7 @@ const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
             name={name}
             type={inputType}
             onBlur={onBlur}
+            readOnly={readOnly}
             value={value}
             onChange={onChange}
             placeholder={placeholder}

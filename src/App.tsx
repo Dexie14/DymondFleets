@@ -16,6 +16,8 @@ import Transaction from "./pages/transaction";
 import Driver from "./pages/drivers/Driver";
 import Users from "./pages/users";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
+import ComingSoon from "./pages/ComingSoon";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
         <Route path="/driver-information" element={<DriverInfo />}></Route>
         <Route path="/terms" element={<Terms />}></Route>
         <Route path="/policy" element={<Policy />}></Route>
+        <Route path="/coming-soon" element={<ComingSoon />}></Route>
         <Route path="/login" element={<Login />}></Route>
 
         <Route path="/admin" element={<ProtectedRoute />}>
@@ -37,6 +40,7 @@ function App() {
             <Route path="transaction" element={<Transaction />} />
             <Route path="users" element={<Users />} />
             <Route path="driver" element={<Driver />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Route>
       </Routes>

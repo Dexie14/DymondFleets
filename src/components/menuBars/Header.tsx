@@ -54,11 +54,13 @@ const Header = () => {
     };
   }, []);
 
-  const [openDropdown, setOpenDropdown] = useState<boolean>(false);
+  // const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [openCompany, setOpenCompany] = useState<boolean>(false);
 
   const TermsandPolicy =
-    location.pathname === "/terms" || location.pathname === "/policy";
+    location.pathname === "/terms" ||
+    location.pathname === "/policy" ||
+    location.pathname === "/coming-soon";
 
   return (
     <section>
@@ -181,13 +183,14 @@ const Header = () => {
                     className="flex items-center justify-between cursor-pointer "
                     onClick={(e) => {
                       e.stopPropagation();
-                      setOpenDropdown(!openDropdown);
+                      navigate("/coming-soon");
+                      // setOpenDropdown(!openDropdown);
                     }}
                   >
                     <span className="font-semibold sm:text-lg text-sm">
-                      Products
+                      Careers
                     </span>
-                    <motion.div
+                    {/* <motion.div
                       initial={{ rotate: 0 }}
                       animate={{ rotate: openDropdown ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
@@ -195,10 +198,10 @@ const Header = () => {
                       <div>
                         <DropdownIcon className="text-black" />
                       </div>
-                    </motion.div>
+                    </motion.div> */}
                   </div>
 
-                  {openDropdown && (
+                  {/* {openDropdown && (
                     <motion.ul
                       initial={{ height: 0, opacity: 0 }}
                       animate={{
@@ -218,7 +221,7 @@ const Header = () => {
                         Courier
                       </li>
                     </motion.ul>
-                  )}
+                  )} */}
                 </div>
                 <div className="">
                   <div
@@ -252,13 +255,31 @@ const Header = () => {
                       transition={{ duration: 0.3 }}
                       className=" mt-2 text-textShade text-left"
                     >
-                      <li className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs cursor-pointer">
+                      <li
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate("/register");
+                        }}
+                        className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs cursor-pointer"
+                      >
                         Drivers
                       </li>
-                      <li className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs cursor-pointer">
+                      <li
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate("/coming-soon");
+                        }}
+                        className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs cursor-pointer"
+                      >
                         Fleets Owners
                       </li>
-                      <li className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs cursor-pointer">
+                      <li
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate("/coming-soon");
+                        }}
+                        className="px-4 py-2 hover:bg-gray-100 sm:text-sm text-xs cursor-pointer"
+                      >
                         Courier
                       </li>
                     </motion.ul>
@@ -268,7 +289,7 @@ const Header = () => {
                   <p
                     onClick={(e) => {
                       e.stopPropagation();
-                      console.log("clicked");
+                      // console.log("clicked");
                       navigate("/about");
                     }}
                     className="font-semibold sm:text-lg text-sm text-left cursor-pointer "

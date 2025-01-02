@@ -4,6 +4,7 @@ import avatar from "@/assets/avatar.png";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/authStore";
+import { useNavigate } from "react-router-dom";
 // import useGetProfile from "@/hooks/api/queries/profile/useGetProfile";
 
 const AdminHeader = () => {
@@ -24,6 +25,8 @@ const AdminHeader = () => {
   const formattedDate = format(currentTime, "eeee, dd, yyyy");
 
   const formattedTime = format(currentTime, "hh:mm:ss a");
+
+  const navigate = useNavigate();
   return (
     <div className="bg-white py-8 px-10 flex items-center justify-between">
       <h3 className="text-xl font-semibold text-blueShade capitalize">
@@ -39,7 +42,13 @@ const AdminHeader = () => {
       </div>
       <div className="flex gap-14 items-center">
         <NotificationIcon />
-        <Avatar>
+        <Avatar
+          className="cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate("/admin/profile");
+          }}
+        >
           <AvatarImage src={avatar} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
